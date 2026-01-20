@@ -2,6 +2,11 @@
 button {
   font-family: inherit;
   background-clip: padding-box;
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
 }
 
 /* Global Styles */
@@ -10,6 +15,7 @@ body {
   background: #f4f6f8;
   margin: 0;
   padding: 0;
+  height: 100vh;
 }
 
 /* Container */
@@ -24,8 +30,11 @@ body {
   background: #2563eb;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start; /* push buttons to top */
+  align-items: stretch;        /* stretch buttons full width */
   padding: 20px 10px;
   box-sizing: border-box;
+  min-height: 100vh;           /* Safari fix */
 }
 
 .sidebar button {
@@ -35,16 +44,11 @@ body {
   line-height: 1.2;
   color: white;
   background-color: #1e40af;
-  border: none;
   border-radius: 6px;
-  cursor: pointer;
   width: 100%;
-  box-sizing: border-box;
+  flex-shrink: 0;              /* prevents Safari shrinking */
   text-align: center;
   white-space: nowrap;
-  appearance: none;
-  -webkit-appearance: none;
-  box-shadow: none;
 }
 
 .sidebar button:hover {
@@ -88,9 +92,7 @@ body {
 .mainContent button {
   background: #2563eb;
   color: white;
-  border: none;
   border-radius: 4px;
-  cursor: pointer;
 }
 
 .mainContent button:hover {
@@ -110,6 +112,22 @@ body {
 }
 
 /* Multiple Choice Options */
+#optionsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* buttons aligned to left */
+  gap: 5px;               /* spacing between buttons */
+  margin-top: 10px;
+}
+
 #optionsContainer button {
-  margin-top: 5px;
+  width: auto; /* can set to 100% if you want full width */
+  padding: 8px 12px;
+}
+
+/* Extra small fix for Safari flexbox bug */
+@supports (-webkit-touch-callout: none) {
+  .sidebar {
+    min-height: 100vh;
+  }
 }

@@ -1,13 +1,12 @@
-/* ===== Base Reset ===== */
+/* ===== Reset ===== */
 * {
   box-sizing: border-box;
 }
 
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
   background: #f4f6f8;
-  margin: 0;
-  padding: 0;
 }
 
 /* ===== Layout ===== */
@@ -34,7 +33,6 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 100%;
 }
 
 .sidebar button:hover {
@@ -44,37 +42,26 @@ body {
 /* ===== Main Content ===== */
 .mainContent {
   flex: 1;
-  overflow-y: auto;
   padding: 20px;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
 }
 
-/* ===== Card / Box ===== */
+/* ===== Boxes ===== */
 .box {
   background: white;
   padding: 15px;
   margin-bottom: 20px;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 2;
 }
 
-/* ===== Form Elements ===== */
+/* ===== Inputs ===== */
 .mainContent input,
 .mainContent textarea,
-.mainContent button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 8px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.mainContent textarea {
-  height: 120px;
-  resize: vertical;
-}
-
-/* ===== Select (IMPORTANT: do NOT remove appearance) ===== */
 .mainContent select {
   width: 100%;
   padding: 10px;
@@ -83,22 +70,45 @@ body {
   border-radius: 6px;
   border: 1px solid #ccc;
   background: white;
-  cursor: pointer;
 }
 
-/* ===== Buttons ===== */
+.mainContent textarea {
+  height: 120px;
+}
+
+/* ===== Buttons (IMPORTANT FIX) ===== */
 .mainContent button {
+  display: block;
+  width: auto;              /* ❗ prevents full-screen stretch */
+  max-width: 100%;
+  padding: 10px 16px;
+  margin-top: 10px;
+  font-size: 16px;
   background: #2563eb;
   color: white;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
+  position: relative;
+  z-index: 5;               /* ❗ ensures clickability */
 }
 
 .mainContent button:hover {
   background: #1e40af;
 }
 
-/* ===== Feedback & Progress ===== */
+/* ===== Multiple Choice ===== */
+#optionsContainer {
+  margin-top: 10px;
+  position: relative;
+  z-index: 4;
+}
+
+#optionsContainer button {
+  width: 100%;
+}
+
+/* ===== Feedback ===== */
 #feedback {
   margin-top: 10px;
   font-weight: bold;
@@ -108,9 +118,4 @@ body {
 #progress {
   margin-top: 5px;
   font-weight: bold;
-}
-
-/* ===== Multiple Choice Buttons ===== */
-#optionsContainer button {
-  margin-top: 6px;
 }

@@ -61,6 +61,7 @@ body {
   overflow-y: auto;
   padding: 20px;
   box-sizing: border-box;
+  text-align: left; /* ensure left alignment for children */
 }
 
 /* Box Styling */
@@ -111,20 +112,22 @@ body {
   font-weight: bold;
 }
 
-/* Multiple Choice Buttons Box (Compact, left-aligned) */
+/* Multiple Choice Buttons Box (Compact, left-aligned above options) */
 #optionsContainer {
-  display: flex;              /* block-level flex container */
-  flex-direction: row;        /* buttons in a row; use column if stacked */
+  display: flex;              /* flex container */
+  flex-direction: row;        /* buttons in a row; change to column if stacked */
   gap: 5px;                   /* spacing between buttons */
-  padding: 8px;               /* padding around buttons inside box */
+  padding: 8px;               /* padding inside box */
   background: #f0f0f0;        /* light gray box */
-  border: 1px solid #ccc;     /* optional border */
+  border: 1px solid #ccc;
   border-radius: 6px;
-  margin: 0 0 10px 0;         /* top=0, right=0, bottom=10px, left=0 */
-  align-items: center;        /* vertically center buttons if row */
-  align-self: flex-start;     /* ensures left alignment in Chrome */
+  margin: 0 0 10px 0;         /* space below box */
+  align-items: center;        /* vertical alignment inside box */
+  width: auto;                /* only as wide as content */
+  max-width: fit-content;     /* Chrome fix: shrink box to fit buttons */
 }
 
+/* Multiple Choice Buttons inside the Box */
 #optionsContainer button {
   width: auto;               /* only as wide as text */
   padding: 6px 12px;

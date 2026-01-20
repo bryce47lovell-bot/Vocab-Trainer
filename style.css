@@ -111,18 +111,31 @@ body {
   font-weight: bold;
 }
 
-/* Multiple Choice Options */
+/* Multiple Choice Buttons Box (Compact, above question/options) */
 #optionsContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* buttons aligned to left */
-  gap: 5px;               /* spacing between buttons */
-  margin-top: 10px;
+  display: inline-flex;       /* box width only as wide as content */
+  flex-direction: row;        /* buttons in a row; change to column if stacked */
+  gap: 5px;                   /* spacing between buttons */
+  padding: 8px;               /* padding around buttons inside box */
+  background: #f0f0f0;        /* light gray box */
+  border: 1px solid #ccc;     /* optional border */
+  border-radius: 6px;
+  margin-bottom: 10px;        /* space below box before options */
+  align-items: center;        /* vertically center buttons if row */
 }
 
 #optionsContainer button {
-  width: auto; /* can set to 100% if you want full width */
-  padding: 8px 12px;
+  width: auto;               /* buttons only as wide as text */
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#optionsContainer button:hover {
+  background-color: #1e40af;
 }
 
 /* Extra small fix for Safari flexbox bug */

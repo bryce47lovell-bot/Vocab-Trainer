@@ -1,78 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Vocabulary Trainer</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<div id="quizTab" class="tabContent">
+  <div class="box">
+    <h3>Quiz</h3>
+    <select id="weekSelect"></select>
 
-<div class="container">
-  <div class="sidebar">
-    <button onclick="showTab('quizTab')">Quiz</button>
-    <button onclick="showTab('addTab')">Add Words</button>
-    <button onclick="showTab('manageTab')">Manage Weeks</button>
-    <button onclick="showTab('summaryTab')">Summary</button>
-  </div>
-
-  <div class="mainContent">
-    
-    <div id="quizTab" class="tabContent">
-      <div class="box">
-        <h3>Quiz</h3>
-        <select id="weekSelect"></select>
-
-        <label>
-          <input type="checkbox" id="multipleChoice"> Multiple Choice
-        </label>
-
-        <label>
-          <input type="checkbox" id="retryLater"> Retry Incorrect Words Later
-        </label>
-
-        <p id="quizTerm">Select a week and start quiz</p>
-
-        <div id="optionsContainer" style="display:none;"></div>
-
-        <input id="answerInput" type="text" placeholder="Type definition">
-        <button id="submitBtn" onclick="submitAnswer()">Submit Answer</button>
-
-        <div id="feedback"></div>
-        <div id="progress"></div>
-        <button onclick="startQuiz()">Start Quiz</button>
-      </div>
+    <!-- Wrap checkboxes in flex containers -->
+    <div class="checkboxWrapper">
+      <input type="checkbox" id="multipleChoice">
+      <label for="multipleChoice">Multiple Choice</label>
     </div>
 
-    <div id="addTab" class="tabContent" style="display:none;">
-      <div class="box">
-        <h3>Add Vocabulary (Bulk)</h3>
-        <input id="weekInput" type="text" placeholder="Week name (ex: Week 3)">
-        <textarea id="bulkInput" placeholder="Term - Definition&#10;Term - Definition"></textarea>
-        <button onclick="addBulkWords()">Add Words</button>
-      </div>
+    <div class="checkboxWrapper">
+      <input type="checkbox" id="retryLater">
+      <label for="retryLater">Retry Incorrect Words Later</label>
     </div>
 
-    <div id="manageTab" class="tabContent" style="display:none;">
-      <div class="box">
-        <h3>Existing Weeks</h3>
-        <ul id="weeksList"></ul>
-      </div>
-    </div>
+    <p id="quizTerm">Select a week and start quiz</p>
 
-    <div id="summaryTab" class="tabContent" style="display:none;">
-      <div class="box">
-        <h3>Quiz Summary</h3>
-        <p>Total words: <span id="totalWords">0</span></p>
-        <p>Correct on first try: <span id="correctFirstTry">0</span></p>
-        <p>Missed words: <span id="missedWords">0</span></p>
-        <ul id="missedWordsList"></ul>
-        <button onclick="reviewMissed()">Review Missed Words</button>
-      </div>
-    </div>
+    <div id="optionsContainer" style="display:none;"></div>
 
+    <input id="answerInput" type="text" placeholder="Type definition">
+    <button id="submitBtn" onclick="submitAnswer()">Submit Answer</button>
+
+    <div id="feedback"></div>
+    <div id="progress"></div>
+    <button onclick="startQuiz()">Start Quiz</button>
   </div>
 </div>
-
-<script src="script.js"></script>
-</body>
-</html>

@@ -111,21 +111,22 @@ body {
   font-weight: bold;
 }
 
-/* Multiple Choice Buttons Box (Compact, above question/options) */
+/* Multiple Choice Buttons Box (Compact, left-aligned) */
 #optionsContainer {
-  display: inline-flex;       /* box width only as wide as content */
-  flex-direction: row;        /* buttons in a row; change to column if stacked */
+  display: flex;              /* block-level flex container */
+  flex-direction: row;        /* buttons in a row; use column if stacked */
   gap: 5px;                   /* spacing between buttons */
   padding: 8px;               /* padding around buttons inside box */
   background: #f0f0f0;        /* light gray box */
   border: 1px solid #ccc;     /* optional border */
   border-radius: 6px;
-  margin-bottom: 10px;        /* space below box before options */
+  margin: 0 0 10px 0;         /* top=0, right=0, bottom=10px, left=0 */
   align-items: center;        /* vertically center buttons if row */
+  align-self: flex-start;     /* ensures left alignment in Chrome */
 }
 
 #optionsContainer button {
-  width: auto;               /* buttons only as wide as text */
+  width: auto;               /* only as wide as text */
   padding: 6px 12px;
   font-size: 14px;
   background-color: #2563eb;

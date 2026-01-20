@@ -112,19 +112,20 @@ body {
   font-weight: bold;
 }
 
-/* Multiple Choice Buttons Box (Vertical, stacked, exact padding) */
+/* Multiple Choice Buttons Box (Vertical, compact, fixed width) */
 #optionsContainer {
   display: flex;
   flex-direction: column;      /* stack buttons vertically */
   gap: 5px;                    /* spacing between buttons */
-  padding: 15px 13px;          /* exactly 15px top/bottom, 13px left/right */
+  padding: 15px 13px;          /* exact padding top/bottom 15px, left/right 13px */
   background: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 6px;
   margin: 0 0 10px 20px;       /* left margin from sidebar */
-  width: max-content;           /* shrink to fit content + padding */
-  align-items: flex-start;      /* align buttons to left */
-  float: left;                  /* ensures left alignment in Chrome */
+  width: fit-content;           /* shrink box to fit content + padding */
+  max-width: 250px;             /* prevents box from being huge */
+  align-items: flex-start;      /* left-align buttons inside box */
+  float: left;                  /* left-align in Chrome */
 }
 
 /* Multiple Choice Buttons inside the Box */

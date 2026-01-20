@@ -147,7 +147,7 @@ function submitAnswer(selected = null) {
   }
 
   if (answer.toLowerCase() === correct.toLowerCase()) {
-    feedback.textContent = "✅ Correct!";
+    feedback.textContent = "Correct!";
     feedback.style.color = "green";
     remainingWords = remainingWords.filter(w => w.term !== currentWord.term);
     setTimeout(showNextWord, 800);
@@ -156,10 +156,10 @@ function submitAnswer(selected = null) {
     if (retryLater) {
       if (!incorrectWords.includes(currentWord)) incorrectWords.push(currentWord);
       remainingWords = remainingWords.filter(w => w.term !== currentWord.term);
-      feedback.textContent = `❌ Wrong! Correct: ${currentWord.def} (Will retry later)`;
+      feedback.textContent = `Wrong! Correct: ${currentWord.def} (Will retry later)`;
       setTimeout(showNextWord, 1200);
     } else {
-      feedback.textContent = "❌ Wrong! Try again.";
+      feedback.textContent = "Wrong! Try again.";
     }
   }
 

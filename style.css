@@ -115,17 +115,17 @@ body {
 /* Multiple Choice Buttons Box (Compact, left-aligned) */
 #optionsContainer {
   display: flex;               /* flex container */
-  flex-direction: row;         /* or column if stacked */
+  flex-direction: row;         /* change to column if stacked */
   gap: 5px;
   padding: 8px;
   background: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 6px;
-  margin: 0 0 10px 0;          /* top=0, right=0, bottom=10px, left=0 */
+  margin: 0 0 10px 0;          /* space below box */
   align-items: center;         /* vertical alignment inside box */
   width: auto;                 /* shrink to fit buttons */
   max-width: fit-content;      /* box only as wide as content */
-  float: left;                 /* FORCE left alignment in Chrome */
+  float: left;                 /* left-align in Chrome */
 }
 
 /* Multiple Choice Buttons inside the Box */
@@ -141,6 +141,25 @@ body {
 
 #optionsContainer button:hover {
   background-color: #1e40af;
+}
+
+/* Checkboxes inside Multiple Choice */
+#optionsContainer input[type="checkbox"] {
+  appearance: none;           /* remove default styling */
+  -webkit-appearance: none;
+  width: 16px;                /* consistent size */
+  height: 16px;
+  margin: 0 5px 0 0;          /* spacing from label/text */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;         /* optional rounded checkbox */
+  cursor: pointer;
+  vertical-align: middle;     /* align with text */
+}
+
+#optionsContainer input[type="checkbox"]:checked {
+  background-color: #2563eb;
+  border-color: #1e40af;
 }
 
 /* Extra small fix for Safari flexbox bug */

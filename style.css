@@ -76,10 +76,10 @@ body {
   height: 120px;
 }
 
-/* ===== Buttons (IMPORTANT FIX) ===== */
+/* ===== Buttons ===== */
 .mainContent button {
   display: block;
-  width: auto;              /* ❗ prevents full-screen stretch */
+  width: auto;              /* prevents full-screen stretch */
   max-width: 100%;
   padding: 10px 16px;
   margin-top: 10px;
@@ -90,14 +90,28 @@ body {
   border-radius: 6px;
   cursor: pointer;
   position: relative;
-  z-index: 5;               /* ❗ ensures clickability */
+  z-index: 5;
 }
 
 .mainContent button:hover {
   background: #1e40af;
 }
 
-/* ===== Multiple Choice ===== */
+/* ===== Multiple Choice / Checkboxes ===== */
+label {
+  display: flex;           /* align checkbox and text in a row */
+  align-items: center;     /* vertically center checkbox and text */
+  gap: 6px;                /* space between checkbox and text */
+  margin: 5px 0;           /* spacing between each row */
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;          /* prevent resizing */
+}
+
+/* ===== Options Container ===== */
 #optionsContainer {
   margin-top: 10px;
   position: relative;

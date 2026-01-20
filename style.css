@@ -1,9 +1,18 @@
- font-family: Arial, sans-serif;
+/* Reset buttons to inherit font and proper background clipping */
+button {
+  font-family: inherit;
+  background-clip: padding-box;
+}
+
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
   background: #f4f6f8;
   margin: 0;
   padding: 0;
 }
 
+/* Container */
 .container {
   display: flex;
   height: 100vh;
@@ -20,23 +29,29 @@
 }
 
 .sidebar button {
-  margin: 5px 0;
-  padding: 8px;
+  margin: 6px 0;
+  padding: 10px 8px;
   font-size: 14px;
+  line-height: 1.2;
   color: white;
-  background: #1e40af;
+  background-color: #1e40af;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   width: 100%;
   box-sizing: border-box;
+  text-align: center;
+  white-space: nowrap;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
 }
 
 .sidebar button:hover {
   background: #17307a;
 }
 
-/* Main content */
+/* Main Content */
 .mainContent {
   flex: 1;
   overflow-y: auto;
@@ -44,15 +59,16 @@
   box-sizing: border-box;
 }
 
-/* Box styling */
+/* Box Styling */
 .box {
   background: white;
   padding: 15px;
   margin-bottom: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Form Elements inside Main Content */
 .mainContent input,
 .mainContent textarea,
 .mainContent select,
@@ -81,7 +97,7 @@
   background: #1e40af;
 }
 
-/* Feedback and progress */
+/* Feedback and Progress */
 #feedback {
   margin-top: 10px;
   font-weight: bold;
@@ -93,7 +109,7 @@
   font-weight: bold;
 }
 
-/* Multiple choice options */
+/* Multiple Choice Options */
 #optionsContainer button {
   margin-top: 5px;
 }

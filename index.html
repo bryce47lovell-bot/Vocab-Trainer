@@ -18,22 +18,20 @@
 
   <div class="mainContent">
 
-    <!-- QUIZ TAB -->
     <div id="quizTab" class="tabContent">
       <div class="box">
         <h3>Quiz</h3>
-
         <select id="weekSelect"></select>
 
-        <label class="checkRow">
-          <input type="checkbox" id="multipleChoice">
-          Multiple Choice
-        </label>
-
-        <label class="checkRow">
-          <input type="checkbox" id="retryLater">
-          Retry Incorrect Words Later
-        </label>
+        <!-- Checkbox container -->
+        <div class="checkboxContainer">
+          <label>
+            <input type="checkbox" id="multipleChoice"> Multiple Choice
+          </label>
+          <label>
+            <input type="checkbox" id="retryLater"> Retry Incorrect Words Later
+          </label>
+        </div>
 
         <p id="quizTerm">Select a week and start quiz</p>
 
@@ -44,22 +42,19 @@
 
         <div id="feedback"></div>
         <div id="progress"></div>
-
         <button onclick="startQuiz()">Start Quiz</button>
       </div>
     </div>
 
-    <!-- ADD TAB -->
     <div id="addTab" class="tabContent" style="display:none;">
       <div class="box">
-        <h3>Add Vocabulary</h3>
-        <input id="weekInput" placeholder="Week name">
-        <textarea id="bulkInput" placeholder="Term - Definition"></textarea>
+        <h3>Add Vocabulary (Bulk)</h3>
+        <input id="weekInput" type="text" placeholder="Week name (ex: Week 3)">
+        <textarea id="bulkInput" placeholder="Term - Definition&#10;Term - Definition"></textarea>
         <button onclick="addBulkWords()">Add Words</button>
       </div>
     </div>
 
-    <!-- MANAGE TAB -->
     <div id="manageTab" class="tabContent" style="display:none;">
       <div class="box">
         <h3>Existing Weeks</h3>
@@ -67,7 +62,6 @@
       </div>
     </div>
 
-    <!-- SUMMARY TAB -->
     <div id="summaryTab" class="tabContent" style="display:none;">
       <div class="box">
         <h3>Quiz Summary</h3>
@@ -75,7 +69,7 @@
         <p>Correct on first try: <span id="correctFirstTry">0</span></p>
         <p>Missed words: <span id="missedWords">0</span></p>
         <ul id="missedWordsList"></ul>
-        <button onclick="reviewMissed()">Review Missed</button>
+        <button onclick="reviewMissed()">Review Missed Words</button>
       </div>
     </div>
 

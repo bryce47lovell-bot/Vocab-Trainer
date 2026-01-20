@@ -1,3 +1,4 @@
+// ===== Vocabulary Data =====
 let vocabByWeek = JSON.parse(localStorage.getItem("vocabByWeek")) || {};
 let currentWeek = null;
 let remainingWords = [];
@@ -11,18 +12,39 @@ const multipleChoiceCheckbox = document.getElementById("multipleChoice");
 const retryLaterCheckbox = document.getElementById("retryLater");
 const weeksList = document.getElementById("weeksList");
 
+// ===== Initialize =====
 updateWeekDropdown();
 updateWeeksList();
+showTab('quizTab');
 
+// ===== Tab Switching =====
 function showTab(tabId) {
   document.querySelectorAll('.tabContent').forEach(tab => tab.style.display = 'none');
   document.getElementById(tabId).style.display = 'block';
 }
 
+// ===== Dark Mode Toggle =====
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  // Optional: store preference in localStorage
+  if (document.body.classList.contains('dark-mode')) {
+    localStorage.setItem('darkMode', 'enabled');
+  } else {
+    localStorage.setItem('darkMode', 'disabled');
+  }
+}
+
+// Restore dark mode preference on page load
+if (localStorage.getItem('darkMode') === 'enabled') {
+  document.body.classList.add('dark-mode');
+}
+
+// ===== Data Storage =====
 function saveData() {
   localStorage.setItem("vocabByWeek", JSON.stringify(vocabByWeek));
 }
 
+// ===== Dropdown & Week List =====
 function updateWeekDropdown() {
   weekSelect.innerHTML = "";
   for (let week in vocabByWeek) {
@@ -33,6 +55,29 @@ function updateWeekDropdown() {
   }
 }
 
+function updateWeeksList() {
+  weeksList.innerHTML = "";
+  for (let week in vocabByWeek) {
+    const li = document.createElement("li");
+    li.textContent = week + " ";
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "Delete";
+    delBtn.style.marginLeft = "10px";
+    delBtn.onclick = () => deleteWeek(week);
+    li.appendChild(delBtn);
+    weeksList.appendChild(li);
+  }
+}
+
+function deleteWeek(week) {
+  if (!confirm(`Delete week "${week}"? This cannot be undone.`)) return;
+  delete vocabByWeek[week];
+  saveData();
+  updateWeekDropdown();
+  updateWeeksList();
+}
+
+// ===== Add Bulk Words =====
 function addBulkWords() {
   const week = document.getElementById("weekInput").value.trim();
   const text = document.getElementById("bulkInput").value.trim();
@@ -57,6 +102,7 @@ function addBulkWords() {
   alert("Words added!");
 }
 
+// ===== Quiz Functions =====
 function startQuiz() {
   currentWeek = weekSelect.value;
   if (!currentWeek || vocabByWeek[currentWeek].length === 0) {
@@ -139,12 +185,6 @@ function submitAnswer(selected = null) {
     }
   }
 
-  if (remainingWords.length === 0 && retryLater && incorrectWords.length > 0) {
-    remainingWords = [...incorrectWords];
-    incorrectWords = [];
-    setTimeout(showNextWord, 1000);
-  }
-
   updateSummary();
 }
 
@@ -177,28 +217,6 @@ function shuffleArray(array) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
-}
-
-function updateWeeksList() {
-  weeksList.innerHTML = "";
-  for (let week in vocabByWeek) {
-    const li = document.createElement("li");
-    li.textContent = week + " ";
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "Delete";
-    delBtn.style.marginLeft = "10px";
-    delBtn.onclick = () => deleteWeek(week);
-    li.appendChild(delBtn);
-    weeksList.appendChild(li);
-  }
-}
-
-function deleteWeek(week) {
-  if (!confirm(`Delete week "${week}"? This cannot be undone.`)) return;
-  delete vocabByWeek[week];
-  saveData();
-  updateWeekDropdown();
-  updateWeeksList();
 }
 
 function updateSummary() {

@@ -66,11 +66,15 @@ body {
 
 /* Box Styling */
 .box {
+  display: flex;               /* make box a flex container */
+  flex-direction: column;      /* stack children vertically */
+  align-items: flex-start;     /* left-align all children */
   background: white;
   padding: 15px;
   margin-bottom: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-sizing: border-box;
 }
 
 /* Form Elements inside Main Content */
@@ -112,34 +116,34 @@ body {
   font-weight: bold;
 }
 
-/* Multiple Choice Buttons Box (Vertical, compact, aligned) */
+/* Multiple Choice Box */
 #optionsContainer {
   display: flex;
-  flex-direction: column;      /* stack vertically */
-  align-items: flex-start;     /* left-align all content */
+  flex-direction: column;  /* stack buttons vertically */
+  align-items: flex-start; /* left-align content */
   justify-content: flex-start; /* top-align content */
-  padding: 15px 13px;          /* exact padding */
+  gap: 5px;
+  padding: 15px 13px;      /* exact padding */
   background: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 6px;
-  margin: 0 0 10px 20px;       /* left margin from sidebar */
-  width: max-content;           /* shrink to content + padding */
-  max-width: 250px;             /* prevent stretching */
-  float: left;                  /* left-align in Chrome */
+  margin-bottom: 10px;     /* spacing below box */
+  width: max-content;       /* shrink box to content + padding */
+  max-width: 250px;         /* prevent too wide */
   box-sizing: border-box;
 }
 
-/* Force checkboxes, buttons, and labels to align top-left */
+/* Stack and align checkboxes, labels, buttons inside Multiple Choice */
 #optionsContainer input,
 #optionsContainer button,
 #optionsContainer label {
-  display: block;               /* take full width of container */
-  margin: 5px 0;                /* spacing between elements */
+  display: block;           /* take full width of container */
+  margin: 5px 0;            /* spacing between items */
 }
 
-/* Multiple Choice Buttons inside the Box */
+/* Multiple Choice Buttons */
 #optionsContainer button {
-  width: auto;                  /* only as wide as text */
+  width: auto;              /* only as wide as text */
   padding: 6px 12px;
   font-size: 14px;
   background-color: #2563eb;
@@ -152,13 +156,13 @@ body {
   background-color: #1e40af;
 }
 
-/* Checkboxes inside Multiple Choice */
+/* Checkboxes */
 #optionsContainer input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
   width: 16px;
   height: 16px;
-  margin: 0 5px 0 0;           /* spacing from label/text */
+  margin: 0 5px 0 0;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;

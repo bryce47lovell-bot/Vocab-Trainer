@@ -13,11 +13,13 @@
     <button onclick="showTab('addTab')">Add Words</button>
     <button onclick="showTab('manageTab')">Manage Weeks</button>
     <button onclick="showTab('summaryTab')">Summary</button>
-    <button onclick="toggleDarkMode()" style="margin-top: 20px;">Toggle Dark Mode</button>
+    <!-- Dark Mode Button -->
+    <button id="darkModeBtn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
   </div>
 
   <div class="mainContent">
     
+    <!-- Quiz Tab -->
     <div id="quizTab" class="tabContent">
       <div class="box">
         <h3>Quiz</h3>
@@ -44,6 +46,7 @@
       </div>
     </div>
 
+    <!-- Add Words Tab -->
     <div id="addTab" class="tabContent" style="display:none;">
       <div class="box">
         <h3>Add Vocabulary (Bulk)</h3>
@@ -53,6 +56,7 @@
       </div>
     </div>
 
+    <!-- Manage Weeks Tab -->
     <div id="manageTab" class="tabContent" style="display:none;">
       <div class="box">
         <h3>Existing Weeks</h3>
@@ -60,6 +64,7 @@
       </div>
     </div>
 
+    <!-- Summary Tab -->
     <div id="summaryTab" class="tabContent" style="display:none;">
       <div class="box">
         <h3>Quiz Summary</h3>
@@ -76,17 +81,48 @@
 
 <script src="script.js"></script>
 <script>
-  // Toggle Dark Mode
-  function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-  }
-
-  // Simple tab switching
+  /* ===== Tab Switching ===== */
   function showTab(tabId) {
     const tabs = document.querySelectorAll('.tabContent');
     tabs.forEach(tab => tab.style.display = 'none');
     document.getElementById(tabId).style.display = 'block';
   }
+
+  /* ===== Dark Mode Toggle ===== */
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+  }
+
+  /* ===== Example Quiz Functions ===== */
+  function startQuiz() {
+    const optionsContainer = document.getElementById('optionsContainer');
+    optionsContainer.style.display = 'block';
+    document.getElementById('quizTerm').textContent = "Quiz started!";
+  }
+
+  function submitAnswer() {
+    const input = document.getElementById('answerInput');
+    const feedback = document.getElementById('feedback');
+    if (input.value.trim() === "") {
+      feedback.textContent = "Please type an answer!";
+    } else {
+      feedback.textContent = "Answer submitted: " + input.value;
+      input.value = "";
+    }
+  }
+
+  function addBulkWords() {
+    const bulkInput = document.getElementById('bulkInput');
+    alert("Added words:\n" + bulkInput.value);
+    bulkInput.value = "";
+  }
+
+  function reviewMissed() {
+    alert("Reviewing missed words (placeholder)");
+  }
+
+  /* ===== Initialize first tab ===== */
+  showTab('quizTab');
 </script>
 </body>
 </html>

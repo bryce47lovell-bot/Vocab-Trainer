@@ -1,118 +1,114 @@
-/* Reset buttons to inherit font and proper background clipping */
-button {
-  font-family: inherit;
-  background-clip: padding-box;
-  -webkit-appearance: none;
-  appearance: none;
-  box-shadow: none;
-  border: none;
-  cursor: pointer;
+/* ===== Reset ===== */
+* {
+  box-sizing: border-box;
 }
 
-/* Global Styles */
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
   background: #f4f6f8;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
 }
 
-/* Container */
+/* ===== Layout ===== */
 .container {
   display: flex;
   height: 100vh;
 }
 
-/* Sidebar */
+/* ===== Sidebar ===== */
 .sidebar {
   width: 150px;
   background: #2563eb;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
   padding: 20px 10px;
-  box-sizing: border-box;
-  min-height: 100vh;
 }
 
 .sidebar button {
   margin: 6px 0;
-  padding: 10px 8px;
+  padding: 8px;
   font-size: 14px;
-  line-height: 1.2;
   color: white;
-  background-color: #1e40af;
-  border-radius: 6px;
-  width: 100%;
-  flex-shrink: 0;
-  text-align: center;
-  white-space: nowrap;
+  background: #1e40af;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .sidebar button:hover {
   background: #17307a;
 }
 
-/* Main Content */
+/* ===== Main Content ===== */
 .mainContent {
   flex: 1;
-  overflow-y: auto;
   padding: 20px;
-  box-sizing: border-box;
-  text-align: left;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
 }
 
-/* Box Styling */
+/* ===== Boxes ===== */
 .box {
-  display: flex;               
-  flex-direction: column;      
-  align-items: flex-start;     
   background: white;
   padding: 15px;
   margin-bottom: 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
 }
 
-/* Checkbox wrapper for perfect left alignment */
-.checkboxWrapper {
-  display: flex;          
-  align-items: center;    
-  gap: 8px;              
-  margin: 5px 0;         
-}
-
-/* Form Elements inside Main Content */
+/* ===== Inputs ===== */
 .mainContent input,
 .mainContent textarea,
-.mainContent select,
-.mainContent button {
+.mainContent select {
   width: 100%;
   padding: 10px;
   margin-top: 8px;
   font-size: 16px;
-  box-sizing: border-box;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
 }
 
 .mainContent textarea {
   height: 120px;
-  resize: vertical;
 }
 
+/* ===== Buttons (IMPORTANT FIX) ===== */
 .mainContent button {
+  display: block;
+  width: auto;              /* ❗ prevents full-screen stretch */
+  max-width: 100%;
+  padding: 10px 16px;
+  margin-top: 10px;
+  font-size: 16px;
   background: #2563eb;
   color: white;
-  border-radius: 4px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  z-index: 5;               /* ❗ ensures clickability */
 }
 
 .mainContent button:hover {
-  background-color: #1e40af;
+  background: #1e40af;
 }
 
-/* Feedback and Progress */
+/* ===== Multiple Choice ===== */
+#optionsContainer {
+  margin-top: 10px;
+  position: relative;
+  z-index: 4;
+}
+
+#optionsContainer button {
+  width: 100%;
+}
+
+/* ===== Feedback ===== */
 #feedback {
   margin-top: 10px;
   font-weight: bold;
@@ -122,62 +118,4 @@ body {
 #progress {
   margin-top: 5px;
   font-weight: bold;
-}
-
-/* Multiple Choice Box */
-#optionsContainer {
-  display: flex;
-  flex-direction: column;  
-  align-items: flex-start; 
-  justify-content: flex-start; 
-  gap: 5px;
-  padding: 15px 13px;      
-  background: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin-bottom: 10px;     
-  width: max-content;       
-  max-width: 250px;         
-  box-sizing: border-box;
-}
-
-/* Stack and align buttons inside Multiple Choice */
-#optionsContainer button {
-  width: auto;              
-  padding: 6px 12px;
-  font-size: 14px;
-  background-color: #2563eb;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-#optionsContainer button:hover {
-  background-color: #1e40af;
-}
-
-/* Checkboxes inside Multiple Choice */
-#optionsContainer input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  margin: 0 5px 0 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
-  vertical-align: middle;
-}
-
-#optionsContainer input[type="checkbox"]:checked {
-  background-color: #2563eb;
-  border-color: #1e40af;
-}
-
-/* Extra small fix for Safari flexbox bug */
-@supports (-webkit-touch-callout: none) {
-  .sidebar {
-    min-height: 100vh;
-  }
 }

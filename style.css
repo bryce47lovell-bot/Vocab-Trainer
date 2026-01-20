@@ -112,25 +112,34 @@ body {
   font-weight: bold;
 }
 
-/* Multiple Choice Buttons Box (Vertical, compact, fixed width) */
+/* Multiple Choice Buttons Box (Vertical, compact, aligned) */
 #optionsContainer {
   display: flex;
-  flex-direction: column;      /* stack buttons vertically */
-  gap: 5px;                    /* spacing between buttons */
-  padding: 15px 13px;          /* exact padding top/bottom 15px, left/right 13px */
+  flex-direction: column;      /* stack vertically */
+  align-items: flex-start;     /* left-align all content */
+  justify-content: flex-start; /* top-align content */
+  padding: 15px 13px;          /* exact padding */
   background: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 6px;
   margin: 0 0 10px 20px;       /* left margin from sidebar */
-  width: fit-content;           /* shrink box to fit content + padding */
-  max-width: 250px;             /* prevents box from being huge */
-  align-items: flex-start;      /* left-align buttons inside box */
+  width: max-content;           /* shrink to content + padding */
+  max-width: 250px;             /* prevent stretching */
   float: left;                  /* left-align in Chrome */
+  box-sizing: border-box;
+}
+
+/* Force checkboxes, buttons, and labels to align top-left */
+#optionsContainer input,
+#optionsContainer button,
+#optionsContainer label {
+  display: block;               /* take full width of container */
+  margin: 5px 0;                /* spacing between elements */
 }
 
 /* Multiple Choice Buttons inside the Box */
 #optionsContainer button {
-  width: auto;                 /* only as wide as text */
+  width: auto;                  /* only as wide as text */
   padding: 6px 12px;
   font-size: 14px;
   background-color: #2563eb;
@@ -149,7 +158,7 @@ body {
   -webkit-appearance: none;
   width: 16px;
   height: 16px;
-  margin: 0 5px 0 0;          /* spacing from label/text */
+  margin: 0 5px 0 0;           /* spacing from label/text */
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;

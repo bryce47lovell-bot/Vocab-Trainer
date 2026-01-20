@@ -97,7 +97,7 @@ body {
 }
 
 .mainContent button:hover {
-  background: #1e40af;
+  background-color: #1e40af;
 }
 
 /* Feedback and Progress */
@@ -112,19 +112,19 @@ body {
   font-weight: bold;
 }
 
-/* Multiple Choice Buttons Box (Compact, left-aligned) */
+/* Multiple Choice Buttons Box (Compact, left-aligned with margin) */
 #optionsContainer {
   display: flex;               /* flex container */
-  flex-direction: row;         /* change to column if stacked */
+  flex-direction: row;         /* or column if stacked */
   gap: 5px;
   padding: 8px;
   background: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 6px;
-  margin: 0 0 10px 0;          /* space below box */
-  align-items: center;         /* vertical alignment inside box */
+  margin: 0 0 10px 20px;      /* left margin added to shift box from center */
+  align-items: center;
   width: auto;                 /* shrink to fit buttons */
-  max-width: fit-content;      /* box only as wide as content */
+  max-width: fit-content;      /* only as wide as content */
   float: left;                 /* left-align in Chrome */
 }
 
@@ -146,25 +146,4 @@ body {
 /* Checkboxes inside Multiple Choice */
 #optionsContainer input[type="checkbox"] {
   appearance: none;           /* remove default styling */
-  -webkit-appearance: none;
-  width: 16px;                /* consistent size */
-  height: 16px;
-  margin: 0 5px 0 0;          /* spacing from label/text */
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;         /* optional rounded checkbox */
-  cursor: pointer;
-  vertical-align: middle;     /* align with text */
-}
-
-#optionsContainer input[type="checkbox"]:checked {
-  background-color: #2563eb;
-  border-color: #1e40af;
-}
-
-/* Extra small fix for Safari flexbox bug */
-@supports (-webkit-touch-callout: none) {
-  .sidebar {
-    min-height: 100vh;
-  }
-}
+  -webkit-appearance: none

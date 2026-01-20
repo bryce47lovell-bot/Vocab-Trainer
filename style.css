@@ -68,12 +68,26 @@ body {
   border: 1px solid #ccc;
 }
 
-/* ===== CHECKBOX ROWS ===== */
-.checkRow {
+/* ===== CHECKBOX CONTAINER ===== */
+.checkboxContainer {
+  padding: 10px 12px;
+  background: #f0f0f0;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: inline-block; /* fits width of content, not full width */
+}
+
+#quizTab label {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+#quizTab input[type="checkbox"] {
+  margin: 0;
+  flex-shrink: 0;
 }
 
 /* ===== BUTTONS ===== */
@@ -180,4 +194,9 @@ body.dark-mode #optionsContainer button:hover {
 body.dark-mode #feedback,
 body.dark-mode #progress {
   color: #e5e7eb;
+}
+
+/* Checkbox container dark mode */
+body.dark-mode .checkboxContainer {
+  background: #1e293b;
 }

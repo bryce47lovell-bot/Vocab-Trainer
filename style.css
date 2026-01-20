@@ -1,114 +1,87 @@
-/* ===== Reset ===== */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+ font-family: Arial, sans-serif;
   background: #f4f6f8;
+  margin: 0;
+  padding: 0;
 }
 
-/* ===== Layout ===== */
 .container {
   display: flex;
   height: 100vh;
 }
 
-/* ===== Sidebar ===== */
+/* Sidebar */
 .sidebar {
   width: 150px;
   background: #2563eb;
   display: flex;
   flex-direction: column;
   padding: 20px 10px;
+  box-sizing: border-box;
 }
 
 .sidebar button {
-  margin: 6px 0;
+  margin: 5px 0;
   padding: 8px;
   font-size: 14px;
   color: white;
   background: #1e40af;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .sidebar button:hover {
   background: #17307a;
 }
 
-/* ===== Main Content ===== */
+/* Main content */
 .mainContent {
   flex: 1;
-  padding: 20px;
   overflow-y: auto;
-  position: relative;
-  z-index: 1;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-/* ===== Boxes ===== */
+/* Box styling */
 .box {
   background: white;
   padding: 15px;
   margin-bottom: 20px;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  position: relative;
-  z-index: 2;
 }
 
-/* ===== Inputs ===== */
 .mainContent input,
 .mainContent textarea,
-.mainContent select {
+.mainContent select,
+.mainContent button {
   width: 100%;
   padding: 10px;
   margin-top: 8px;
   font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background: white;
+  box-sizing: border-box;
 }
 
 .mainContent textarea {
   height: 120px;
+  resize: vertical;
 }
 
-/* ===== Buttons (IMPORTANT FIX) ===== */
 .mainContent button {
-  display: block;
-  width: auto;              /* ❗ prevents full-screen stretch */
-  max-width: 100%;
-  padding: 10px 16px;
-  margin-top: 10px;
-  font-size: 16px;
   background: #2563eb;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
-  position: relative;
-  z-index: 5;               /* ❗ ensures clickability */
 }
 
 .mainContent button:hover {
   background: #1e40af;
 }
 
-/* ===== Multiple Choice ===== */
-#optionsContainer {
-  margin-top: 10px;
-  position: relative;
-  z-index: 4;
-}
-
-#optionsContainer button {
-  width: 100%;
-}
-
-/* ===== Feedback ===== */
+/* Feedback and progress */
 #feedback {
   margin-top: 10px;
   font-weight: bold;
@@ -118,4 +91,9 @@ body {
 #progress {
   margin-top: 5px;
   font-weight: bold;
+}
+
+/* Multiple choice options */
+#optionsContainer button {
+  margin-top: 5px;
 }

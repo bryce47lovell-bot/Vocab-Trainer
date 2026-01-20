@@ -1,4 +1,4 @@
-/* ===== Reset ===== */
+/* ===== RESET ===== */
 * {
   box-sizing: border-box;
 }
@@ -6,17 +6,20 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  color: #111827;
 }
 
-/* ===== Layout ===== */
+/* ===== LAYOUT ===== */
 .container {
   display: flex;
   height: 100vh;
 }
 
-/* ===== Sidebar ===== */
+/* ===== SIDEBAR ===== */
 .sidebar {
   width: 150px;
+  background: #2563eb;
   display: flex;
   flex-direction: column;
   padding: 20px 10px;
@@ -26,32 +29,34 @@ body {
   margin: 6px 0;
   padding: 8px;
   font-size: 14px;
+  color: white;
+  background: #1e40af;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-/* ===== Main Content ===== */
+.sidebar button:hover {
+  background: #17307a;
+}
+
+/* ===== MAIN CONTENT ===== */
 .mainContent {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  position: relative;
-  z-index: 1;
 }
 
-/* ===== Boxes ===== */
+/* ===== BOX ===== */
 .box {
   background: white;
   padding: 15px;
   margin-bottom: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  position: relative;
-  z-index: 2;
 }
 
-/* ===== Inputs ===== */
+/* ===== INPUTS ===== */
 .mainContent input,
 .mainContent textarea,
 .mainContent select {
@@ -61,53 +66,43 @@ body {
   font-size: 16px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  background: white;
 }
 
-.mainContent textarea {
-  height: 120px;
+/* ===== CHECKBOX ROWS ===== */
+.checkRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
 }
 
-/* ===== Buttons ===== */
+/* ===== BUTTONS ===== */
 .mainContent button {
-  display: block;
-  width: auto;
-  max-width: 100%;
   padding: 10px 16px;
   margin-top: 10px;
   font-size: 16px;
+  background: #2563eb;
+  color: white;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
-  position: relative;
-  z-index: 5;
 }
 
-/* ===== Checkbox alignment ===== */
-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 5px 0;
+.mainContent button:hover {
+  background: #1e40af;
 }
 
-input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
-
-/* ===== Options Container ===== */
+/* ===== MULTIPLE CHOICE ===== */
 #optionsContainer {
   margin-top: 10px;
-  position: relative;
-  z-index: 4;
 }
 
 #optionsContainer button {
   width: 100%;
+  margin-top: 6px;
 }
 
-/* ===== Feedback ===== */
+/* ===== FEEDBACK ===== */
 #feedback {
   margin-top: 10px;
   font-weight: bold;
@@ -119,76 +114,70 @@ input[type="checkbox"] {
   font-weight: bold;
 }
 
-/* ===== Light Mode ===== */
-body.light-mode {
-  background: #f4f6f8;
-  color: #000;
-}
+/* ========================= */
+/* ===== DARK MODE ===== */
+/* ========================= */
 
-body.light-mode .box {
-  background: white;
-  color: #000;
-}
-
-body.light-mode .mainContent input,
-body.light-mode .mainContent textarea,
-body.light-mode .mainContent select {
-  background: white;
-  color: #000;
-  border: 1px solid #ccc;
-}
-
-body.light-mode .sidebar {
-  background: #2563eb;
-}
-
-body.light-mode .sidebar button {
-  background: #1e40af;
-  color: white;
-}
-
-body.light-mode .sidebar button:hover {
-  background: #17307a;
-}
-
-body.light-mode #optionsContainer {
-  background: #f0f0f0;
-  border: 1px solid #ccc;
-}
-
-/* ===== Dark Mode ===== */
 body.dark-mode {
-  background: #1f1f1f;
-  color: #e0e0e0;
+  background: #0f172a;
+  color: #e5e7eb;
 }
 
-body.dark-mode .box {
-  background: #2c2c2c;
-  color: #e0e0e0;
-}
-
-body.dark-mode .mainContent input,
-body.dark-mode .mainContent textarea,
-body.dark-mode .mainContent select {
-  background: #3a3a3a;
-  color: #e0e0e0;
-  border: 1px solid #555;
-}
-
+/* Sidebar */
 body.dark-mode .sidebar {
-  background: #111827;
+  background: #020617;
 }
 
 body.dark-mode .sidebar button {
-  background: #1f2937;
-  color: #e0e0e0;
+  background: #1e293b;
+  color: #e5e7eb;
 }
 
 body.dark-mode .sidebar button:hover {
-  background: #374151;
+  background: #334155;
 }
 
-body.dark-mode #optionsContainer {
-  background: #3a3a3a;
-  border: 1px solid #555;
+/* Main content */
+body.dark-mode .mainContent {
+  background: #0f172a;
+}
+
+/* Boxes */
+body.dark-mode .box {
+  background: #020617;
+  box-shadow: 0 0 0 1px #1e293b;
+}
+
+/* Inputs */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background: #020617;
+  color: #e5e7eb;
+  border: 1px solid #334155;
+}
+
+/* Buttons */
+body.dark-mode .mainContent button {
+  background: #2563eb;
+}
+
+body.dark-mode .mainContent button:hover {
+  background: #1d4ed8;
+}
+
+/* Multiple choice buttons */
+body.dark-mode #optionsContainer button {
+  background: #1e293b;
+  color: #e5e7eb;
+}
+
+body.dark-mode #optionsContainer button:hover {
+  background: #334155;
+}
+
+/* Feedback */
+body.dark-mode #feedback,
+body.dark-mode #progress {
+  color: #e5e7eb;
 }

@@ -1,3 +1,8 @@
+/* Global reset + consistency */
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   background: #f4f6f8;
@@ -5,9 +10,10 @@ body {
   padding: 0;
 }
 
+/* Layout */
 .container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh; /* FIXES Safari / GitHub Pages vh issue */
 }
 
 /* Sidebar */
@@ -17,20 +23,18 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px 10px;
-  box-sizing: border-box;
 }
 
 .sidebar button {
-  margin: 5px 0;
-  padding: 8px;
+  margin: 6px 0;
+  padding: 10px;
   font-size: 14px;
   color: white;
   background: #1e40af;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   width: 100%;
-  box-sizing: border-box;
 }
 
 .sidebar button:hover {
@@ -42,59 +46,77 @@ body {
   flex: 1;
   overflow-y: auto;
   padding: 20px;
-  box-sizing: border-box;
 }
 
-/* Box styling */
+/* Content boxes */
 .box {
   background: white;
-  padding: 15px;
+  padding: 16px;
   margin-bottom: 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.mainContent input,
-.mainContent textarea,
-.mainContent select,
-.mainContent button {
+/* Normalize form elements (Safari fix) */
+input,
+textarea,
+select,
+button {
   width: 100%;
   padding: 10px;
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 6px;
   box-sizing: border-box;
 }
 
-.mainContent textarea {
+/* Inputs */
+input,
+textarea,
+select {
+  border: 1px solid #ccc;
+  background: white;
+}
+
+/* Fix dropdown height */
+select {
+  height: 42px;
+}
+
+/* Textarea */
+textarea {
   height: 120px;
   resize: vertical;
 }
 
-.mainContent button {
+/* Buttons */
+button {
   background: #2563eb;
   color: white;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
 }
 
-.mainContent button:hover {
+button:hover {
   background: #1e40af;
 }
 
-/* Feedback and progress */
+/* Feedback & progress */
 #feedback {
-  margin-top: 10px;
+  margin-top: 12px;
   font-weight: bold;
   text-align: center;
 }
 
 #progress {
-  margin-top: 5px;
+  margin-top: 6px;
   font-weight: bold;
+  text-align: center;
 }
 
 /* Multiple choice options */
 #optionsContainer button {
-  margin-top: 5px;
+  margin-top: 8px;
 }

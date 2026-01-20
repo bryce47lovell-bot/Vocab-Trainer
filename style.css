@@ -77,12 +77,12 @@ body {
   box-sizing: border-box;
 }
 
-/* Checkbox Wrapper to align checkboxes consistently */
+/* Checkbox wrapper for perfect left alignment */
 .checkboxWrapper {
-  display: flex;
-  align-items: center;   /* vertically center checkbox and label */
-  gap: 5px;              /* spacing between checkbox and text */
-  margin: 5px 0;         /* vertical spacing between rows */
+  display: flex;          
+  align-items: center;    
+  gap: 8px;              
+  margin: 5px 0;         
 }
 
 /* Form Elements inside Main Content */

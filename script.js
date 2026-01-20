@@ -22,15 +22,26 @@ const optionsContainer = document.getElementById("optionsContainer");
 const multipleChoiceCheckbox = document.getElementById("multipleChoice");
 const retryLaterCheckbox = document.getElementById("retryLater");
 const weeksList = document.getElementById("weeksList");
+const answerInput = document.getElementById("answerInput");
+const submitBtn = document.getElementById("submitBtn");
+const quizTerm = document.getElementById("quizTerm");
+const feedback = document.getElementById("feedback");
+const progress = document.getElementById("progress");
+const totalWords = document.getElementById("totalWords");
+const correctFirstTry = document.getElementById("correctFirstTry");
+const missedWords = document.getElementById("missedWords");
 
 /* =========================
-   UI
+   DARK MODE TOGGLE
 ========================= */
 function toggleDarkMode() {
   const isDark = document.body.classList.toggle("dark-mode");
   localStorage.setItem("darkMode", isDark ? "on" : "off");
 }
 
+/* =========================
+   UI
+========================= */
 function showTab(tabId) {
   document.querySelectorAll(".tabContent").forEach(tab => {
     tab.style.display = "none";
@@ -152,6 +163,7 @@ function showNextWord() {
     optionsContainer.style.display = "none";
     answerInput.style.display = "none";
     submitBtn.style.display = "none";
+    progress.textContent = "";
     updateSummary();
     return;
   }
@@ -183,12 +195,14 @@ function submitAnswer(selected = null) {
 
   if (answer.toLowerCase() === correct.toLowerCase()) {
     feedback.textContent = "✅ Correct!";
+    feedback.style.color = "green";
     remainingWords = remainingWords.filter(w => w !== currentWord);
     setTimeout(showNextWord, 700);
   } else {
     feedback.textContent = "❌ Wrong!";
+    feedback.style.color = "red";
     if (retryLaterCheckbox.checked) {
-      incorrectWords.push(currentWord);
+      if (!incorrectWords.includes(currentWord)) incorrectWords.push(currentWord);
       remainingWords = remainingWords.filter(w => w !== currentWord);
       setTimeout(showNextWord, 900);
     }
@@ -237,11 +251,35 @@ function updateSummary() {
 }
 
 function reviewMissed() {
+  if (!currentWeek || !wordStats[currentWeek]) return;
+
+  const missedTerms = Object.keys(wordStats[currentWeek]).filter(
+    t => !wordStats[currentWeek][t].correctFirstTry
+  );
+
+  if (missedTerms.length === 0) {
+    alert("No missed words to review!");
+    return;
+  }
+
+  remainingWords = vocabByWeek[currentWeek].filter(w => missedTerms.includes(w.term));
+  incorrectWords = [];
+  showNextWord();
   showTab("quizTab");
 }
 
 /* =========================
-   INIT
+   SUBMIT ANSWER ON ENTER
+========================= */
+answerInput.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    submitAnswer();
+  }
+});
+
+/* =========================
+   INITIALIZE
 ========================= */
 updateWeekDropdown();
 updateWeeksList();

@@ -5,7 +5,7 @@
   <title>Vocabulary Trainer</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="light-mode">
 
 <div class="container">
   <div class="sidebar">
@@ -13,6 +13,7 @@
     <button onclick="showTab('addTab')">Add Words</button>
     <button onclick="showTab('manageTab')">Manage Weeks</button>
     <button onclick="showTab('summaryTab')">Summary</button>
+    <button onclick="toggleDarkMode()" style="margin-top: 20px;">Toggle Dark Mode</button>
   </div>
 
   <div class="mainContent">
@@ -74,5 +75,18 @@
 </div>
 
 <script src="script.js"></script>
+<script>
+  // Toggle Dark Mode
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+  }
+
+  // Simple tab switching
+  function showTab(tabId) {
+    const tabs = document.querySelectorAll('.tabContent');
+    tabs.forEach(tab => tab.style.display = 'none');
+    document.getElementById(tabId).style.display = 'block';
+  }
+</script>
 </body>
 </html>

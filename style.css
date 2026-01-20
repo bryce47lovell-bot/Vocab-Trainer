@@ -69,12 +69,14 @@ body {
 }
 
 /* ===== CHECKBOX CONTAINER ===== */
+/* ===== CHECKBOX CONTAINER ===== */
 .checkboxContainer {
-  padding: 10px 12px;
-  background: #f0f0f0;
-  border-radius: 8px;
-  margin: 10px 0;
-  display: inline-block; /* fits width of content, not full width */
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 #quizTab label {

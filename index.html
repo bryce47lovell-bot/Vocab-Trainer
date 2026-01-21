@@ -10,11 +10,12 @@
 
 <div class="container">
   <div class="sidebar">
-    <button onclick="showTab('loginTab')">Login / Signup</button>
     <button onclick="showTab('quizTab')">Quiz</button>
     <button onclick="showTab('addTab')">Add Words</button>
+    <button onclick="showTab('manageWeeksTab')">Manage Weeks</button>
     <button onclick="showTab('summaryTab')">Summary</button>
     <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <button onclick="showTab('loginTab')">Login / Signup</button>
     <button onclick="logoutUser()">Logout</button>
   </div>
 
@@ -73,6 +74,14 @@
         <input id="weekInput" type="text" placeholder="Week name (ex: Week 3)">
         <textarea id="bulkInput" placeholder="Term - Definition&#10;Term - Definition"></textarea>
         <button onclick="addBulkWords()">Add Words</button>
+      </div>
+    </div>
+
+    <!-- MANAGE WEEKS -->
+    <div id="manageWeeksTab" class="tabContent" style="display:none;">
+      <div class="box">
+        <h3>Manage Weeks</h3>
+        <ul id="weeksList"></ul>
       </div>
     </div>
 

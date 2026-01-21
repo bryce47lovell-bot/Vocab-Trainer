@@ -45,23 +45,21 @@ body {
 /* ===== MAIN CONTENT AREA ===== */
 .mainContent {
   flex: 1;
-  padding: 20px;
-  display: block;
+  padding: 20px;          /* space from sidebar */
 }
 
 /* ===== TAB CONTENT ===== */
 .tabContent {
-  max-width: none;      /* remove width limit */
-  margin: 0;            /* no centering */
-  padding: 0 20px;      /* optional horizontal padding */
+  width: 100%;
+  margin: 0;
+  padding: 0;             /* IMPORTANT: removes width restriction */
 }
 
 /* ===== CONTENT BOX ===== */
 .box {
-  width: 100%;          /* stretch full width */
-  max-width: 100%;      /* ensure it doesn’t shrink */
+  width: 100%;
   background: white;
-  padding: 20px;
+  padding: 20px;          /* padding belongs HERE */
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   text-align: left;
@@ -111,7 +109,6 @@ button {
   margin: 15px 0;
   font-size: 16px;
   font-weight: bold;
-  max-width: 100%;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
@@ -189,19 +186,11 @@ body.dark-mode .sidebar button:hover {
   background: #3b4252;
 }
 
-/* ===== HARD FIX CHECKBOX ALIGNMENT ===== */
-.checkboxContainer {
-  display: block !important;
-  text-align: left;
-}
-
+/* ===== CHECKBOX ALIGNMENT (FINAL) ===== */
 .checkboxContainer label {
-  display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
-  justify-content: flex-start !important;
-  width: auto !important;
   gap: 8px;
-  margin: 6px 0;
 }
 
 .checkboxContainer input[type="checkbox"] {

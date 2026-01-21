@@ -180,17 +180,20 @@ body.dark-mode .sidebar button:hover {
   background: #3b4252;
 }
 
+/* PROGRESS BAR */
 #progressContainer {
   width: 100%;
   height: 20px;
   background: #d1d5db;
   border-radius: 10px;
   margin: 10px 0;
+  overflow: hidden;
 }
 
 #progressBar {
   height: 100%;
   width: 0%;
+  background: #2563eb;
   border-radius: 10px;
-  transition: width 0.35s, background-color 0.35s;
+  transition: width 0.4s ease, background-color 0.35s;
 }

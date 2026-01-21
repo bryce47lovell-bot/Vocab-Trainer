@@ -34,7 +34,7 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.25s ease;
+  transition: background-color 0.25s ease, transform 0.15s ease;
 }
 
 .sidebar button:hover {
@@ -92,7 +92,7 @@ button {
   padding: 8px 12px;
   font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.15s ease;
 }
 
 .checkboxContainer {
@@ -130,6 +130,21 @@ button {
   width: 100%;
   margin-bottom: 6px;
   text-align: left;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+#optionsContainer button:hover {
+  transform: scale(1.03);
+}
+
+#optionsContainer button.correct {
+  background-color: #22c55e !important;
+  color: white;
+}
+
+#optionsContainer button.wrong {
+  background-color: #ef4444 !important;
+  color: white;
 }
 
 #feedback {

@@ -15,19 +15,15 @@ const answerInput = document.getElementById("answerInput");
 document.addEventListener("DOMContentLoaded", () => {
   updateWeekDropdown();
   updateWeeksList();
-  if (localStorage.getItem("darkMode") === "on") document.body.classList.add("dark-mode");
+
+  if (localStorage.getItem("darkMode") === "on") {
+    document.body.classList.add("dark-mode");
+  }
 });
 
 function showTab(tabId) {
-  document.querySelectorAll(".tabContent").forEach(tab => {
-    if (tab.id === tabId) {
-      tab.style.display = "block";
-      requestAnimationFrame(() => tab.classList.remove("tabHidden"));
-    } else {
-      tab.classList.add("tabHidden");
-      setTimeout(() => tab.style.display = "none", 250);
-    }
-  });
+  document.querySelectorAll('.tabContent').forEach(tab => tab.style.display = 'none');
+  document.getElementById(tabId).style.display = 'block';
 }
 
 function toggleDarkMode() {
@@ -53,16 +49,23 @@ function addBulkWords() {
   const week = document.getElementById("weekInput").value.trim();
   const text = document.getElementById("bulkInput").value.trim();
   if (!week || !text) return;
+
   if (!vocabByWeek[week]) vocabByWeek[week] = [];
+
   text.split("\n").forEach(line => {
     const parts = line.split(" - ");
-    if (parts.length === 2) vocabByWeek[week].push({ term: parts[0].trim(), def: parts[1].trim() });
+    if (parts.length === 2) {
+      vocabByWeek[week].push({ term: parts[0].trim(), def: parts[1].trim() });
+    }
   });
+
   saveData();
   updateWeekDropdown();
   updateWeeksList();
+
   document.getElementById("weekInput").value = "";
   document.getElementById("bulkInput").value = "";
+
   alert("Words added!");
 }
 
@@ -72,12 +75,18 @@ function startQuiz() {
     alert("No words in this week");
     return;
   }
+
   remainingWords = [...vocabByWeek[currentWeek]];
   incorrectWords = [];
+
   if (!wordStats[currentWeek]) wordStats[currentWeek] = {};
   remainingWords.forEach(w => {
-    if (!wordStats[currentWeek][w.term]) wordStats[currentWeek][w.term] = { attempts: 0, correctFirstTry: true };
+    if (!wordStats[currentWeek][w.term]) {
+      wordStats[currentWeek][w.term] = { attempts: 0, correctFirstTry: true };
+    }
   });
+
+  updateProgressBar();
   showNextWord();
 }
 
@@ -94,19 +103,19 @@ function showNextWord() {
       answerInput.style.display = "none";
       document.getElementById("submitBtn").style.display = "none";
       document.getElementById("progress").textContent = "";
-      updateProgressBar();
       updateSummary();
+      updateProgressBar();
       return;
     }
   }
 
   const randomIndex = Math.floor(Math.random() * remainingWords.length);
   currentWord = remainingWords[randomIndex];
+
   document.getElementById("quizTerm").textContent = currentWord.term;
   answerInput.value = "";
   document.getElementById("feedback").textContent = "";
   document.getElementById("progress").textContent = `Remaining: ${remainingWords.length}`;
-  updateProgressBar();
 
   if (multipleChoiceCheckbox.checked) setupMultipleChoice();
   else {
@@ -114,6 +123,8 @@ function showNextWord() {
     answerInput.style.display = "block";
     document.getElementById("submitBtn").style.display = "inline-block";
   }
+
+  updateProgressBar();
 }
 
 function submitAnswer(selected = null) {
@@ -123,36 +134,28 @@ function submitAnswer(selected = null) {
   const retryLater = retryLaterCheckbox.checked;
 
   wordStats[currentWeek][currentWord.term].attempts++;
-  if (wordStats[currentWeek][currentWord.term].attempts > 1)
+  if (wordStats[currentWeek][currentWord.term].attempts > 1) {
     wordStats[currentWeek][currentWord.term].correctFirstTry = false;
-
-  if (selected) {
-    const btns = Array.from(optionsContainer.children);
-    btns.forEach(btn => {
-      if (btn.textContent === selected) {
-        btn.classList.add(answer.toLowerCase() === correct.toLowerCase() ? "correct" : "wrong");
-        setTimeout(() => btn.classList.remove("correct", "wrong"), 600);
-      }
-    });
   }
 
   if (answer.toLowerCase() === correct.toLowerCase()) {
     feedback.textContent = "Correct!";
     feedback.style.color = "green";
     remainingWords = remainingWords.filter(w => w.term !== currentWord.term);
-    setTimeout(() => { showNextWord(); updateProgressBar(); }, 800);
+    setTimeout(showNextWord, 800);
   } else {
     feedback.style.color = "red";
     if (retryLater) {
       if (!incorrectWords.includes(currentWord)) incorrectWords.push(currentWord);
       remainingWords = remainingWords.filter(w => w.term !== currentWord.term);
       feedback.textContent = `Wrong! Correct: ${currentWord.def} (Will retry later)`;
-      setTimeout(() => { showNextWord(); updateProgressBar(); }, 1200);
+      setTimeout(showNextWord, 1200);
     } else {
       feedback.textContent = "Wrong! Try again.";
     }
   }
 
+  updateProgressBar();
   updateSummary();
 }
 
@@ -164,11 +167,14 @@ function setupMultipleChoice() {
 
   const allDefs = vocabByWeek[currentWeek].map(w => w.def);
   const choices = [currentWord.def];
+
   while (choices.length < 4 && choices.length < allDefs.length) {
     const randomDef = allDefs[Math.floor(Math.random() * allDefs.length)];
     if (!choices.includes(randomDef)) choices.push(randomDef);
   }
+
   shuffleArray(choices);
+
   choices.forEach(def => {
     const btn = document.createElement("button");
     btn.textContent = def;
@@ -208,13 +214,16 @@ function deleteWeek(week) {
 
 function updateSummary() {
   if (!currentWeek || !wordStats[currentWeek]) return;
+
   const stats = wordStats[currentWeek];
   const total = Object.keys(stats).length;
   const correctFirst = Object.values(stats).filter(s => s.correctFirstTry).length;
   const missed = total - correctFirst;
+
   document.getElementById("totalWords").textContent = total;
   document.getElementById("correctFirstTry").textContent = correctFirst;
   document.getElementById("missedWords").textContent = missed;
+
   const missedList = document.getElementById("missedWordsList");
   missedList.innerHTML = "";
   for (let term in stats) {
@@ -228,13 +237,16 @@ function updateSummary() {
 
 function reviewMissed() {
   if (!currentWeek || !wordStats[currentWeek]) return;
+
   const missedTerms = Object.keys(wordStats[currentWeek]).filter(
     t => !wordStats[currentWeek][t].correctFirstTry
   );
+
   if (missedTerms.length === 0) {
     alert("No missed words to review!");
     return;
   }
+
   remainingWords = vocabByWeek[currentWeek].filter(w => missedTerms.includes(w.term));
   incorrectWords = [];
   showNextWord();
@@ -248,10 +260,30 @@ answerInput.addEventListener("keydown", function(e) {
   }
 });
 
+// ===== Dynamic Progress Bar =====
 function updateProgressBar() {
-  if (!currentWeek || !vocabByWeek[currentWeek]) return;
+  if (!currentWeek || !vocabByWeek[currentWeek] || vocabByWeek[currentWeek].length === 0) {
+    const bar = document.getElementById("progressBar");
+    bar.style.width = "0%";
+    bar.style.backgroundColor = "red";
+    return;
+  }
+
   const total = vocabByWeek[currentWeek].length;
   const done = total - remainingWords.length;
   const percent = (done / total) * 100;
-  document.getElementById("progressBar").style.width = percent + "%";
+
+  const bar = document.getElementById("progressBar");
+  bar.style.width = percent + "%";
+
+  let r, g, b = 0;
+  if (percent < 50) {
+    r = 255;
+    g = Math.round((percent / 50) * 255);
+  } else {
+    r = Math.round(255 - ((percent - 50) / 50) * 255);
+    g = 255;
+  }
+
+  bar.style.backgroundColor = `rgb(${r},${g},${b})`;
 }

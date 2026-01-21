@@ -282,3 +282,8 @@ function endQuiz(){
   document.getElementById("answerInput").value="";
   document.getElementById("progressBar").style.width="100%";
 }
+
+function toggleSettings() {
+  const tab = document.getElementById("settingsTab");
+  tab.style.display = tab.style.display === "block" ? "none" : "block";
+}

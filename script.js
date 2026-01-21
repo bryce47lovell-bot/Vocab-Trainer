@@ -150,9 +150,10 @@ function submitAnswer(selected = null) {
   wordStats[currentWeek][currentWord.term].userAnswer = answer;
 
   if (testMode) {
+    // Test mode: record answer, remove word, go next
     remainingWords = remainingWords.filter(w => w.term !== currentWord.term);
     showNextWord();
-    return;
+    return; // skip correctness check
   }
 
   const correct = currentWord.def.trim();
@@ -200,7 +201,7 @@ function setupMultipleChoice() {
   choices.forEach(def => {
     const btn = document.createElement("button");
     btn.textContent = def;
-    btn.onclick = () => submitAnswer(def);
+    btn.onclick = () => submitAnswer(def); // testMode is handled inside submitAnswer
     optionsContainer.appendChild(btn);
   });
 }
@@ -295,7 +296,8 @@ function showTestResults() {
 
   for (let term in wordStats[currentWeek]) {
     const entry = wordStats[currentWeek][term];
-    if (entry.userAnswer.toLowerCase() === vocabByWeek[currentWeek].find(w => w.term === term).def.toLowerCase()) {
+    const correctAnswer = vocabByWeek[currentWeek].find(w => w.term === term).def;
+    if (entry.userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
       correctCount++;
       entry.correctFirstTry = true;
     } else {

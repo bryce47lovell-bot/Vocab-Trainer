@@ -12,14 +12,14 @@
   <div class="sidebar">
     <button onclick="showTab('quizTab')">Quiz</button>
     <button onclick="showTab('addTab')">Add Words</button>
-    <button onclick="showTab('summaryTab')">Summary</button>
+    <button onclick="toggleSettings()">Settings</button>
     <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
   </div>
 
   <div class="mainContent">
 
     <!-- QUIZ -->
-    <div id="quizTab" class="tabContent" style="display:none;">
+    <div id="quizTab" class="tabContent" style="display:block;">
       <div class="box">
         <h3>Quiz</h3>
         <select id="weekSelect"></select>
@@ -32,13 +32,11 @@
 
         <p id="quizTerm">Select a week and start quiz</p>
         <div id="optionsContainer" style="display:none;"></div>
-
         <input id="answerInput" type="text" placeholder="Type definition">
         <button id="submitBtn" onclick="submitAnswer()">Submit Answer</button>
 
         <div id="feedback"></div>
         <div id="progress"></div>
-
         <div id="progressContainer">
           <div id="progressBar"></div>
         </div>
@@ -57,41 +55,31 @@
       </div>
     </div>
 
-    <!-- SUMMARY -->
-    <div id="summaryTab" class="tabContent" style="display:none;">
+    <!-- SETTINGS -->
+    <div id="settingsTab" class="tabContent settingsTab" style="display:none;">
       <div class="box">
-        <h3>Quiz Summary</h3>
-        <p>Total words: <span id="totalWords">0</span></p>
-        <p>Correct on first try: <span id="correctFirstTry">0</span></p>
-        <p>Missed words: <span id="missedWords">0</span></p>
-        <ul id="missedWordsList"></ul>
+        <h3>Settings</h3>
+
+        <h4>Account</h4>
+        <input id="signupEmail" type="text" placeholder="Email">
+        <input id="signupPassword" type="password" placeholder="Password">
+        <button onclick="signupUser()">Signup</button>
+        <p id="signupMessage"></p>
+
+        <input id="loginEmail" type="text" placeholder="Email">
+        <input id="loginPassword" type="password" placeholder="Password">
+        <button onclick="loginUser()">Login</button>
+        <p id="loginMessage"></p>
+
+        <button onclick="logoutUser()">Logout</button>
+
+        <h4>Manage Weeks</h4>
+        <ul id="weekList"></ul>
       </div>
     </div>
 
   </div>
 </div>
-
-<!-- SETTINGS TAB -->
-<div id="settingsTab" class="tabContent settings-tab" style="display:none;">
-  <div class="box">
-    <h3>Login</h3>
-    <input id="loginEmail" type="text" placeholder="Email">
-    <input id="loginPassword" type="password" placeholder="Password">
-    <button onclick="loginUser()">Login</button>
-    <p id="loginMessage"></p>
-
-    <h3>Signup</h3>
-    <input id="signupEmail" type="text" placeholder="Email">
-    <input id="signupPassword" type="password" placeholder="Password">
-    <button onclick="signupUser()">Signup</button>
-    <p id="signupMessage"></p>
-
-    <button onclick="logoutUser()" style="margin-top:10px;">Logout</button>
-  </div>
-</div>
-
-<!-- Floating button -->
-<button id="openSettingsBtn" class="floating-settings" onclick="toggleSettings()">⚙️</button>
 
 </body>
 </html>

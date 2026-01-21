@@ -5,6 +5,7 @@ let remainingWords = [];
 let currentWord = null;
 let incorrectWords = [];
 let testMode = false;
+let attemptedWords = 0;
 
 // Elements
 const weekSelect = document.getElementById("weekSelect");
@@ -93,12 +94,13 @@ function startQuiz() {
 
   remainingWords = [...vocabByWeek[currentWeek]];
   incorrectWords = [];
+  attemptedWords = 0;
   testMode = testModeCheckbox.checked;
 
   if (!wordStats[currentWeek]) wordStats[currentWeek] = {};
   remainingWords.forEach(w => {
     if (!wordStats[currentWeek][w.term]) {
-      wordStats[currentWeek][w.term] = { attempts: 0, correctFirstTry: true };
+      wordStats[currentWeek][w.term] = { attempts: 0, correctFirstTry: true, firstAnswerRecorded: false };
     }
   });
 
@@ -130,39 +132,40 @@ function showNextWord() {
 // Submit answer
 function submitAnswer(selected = null) {
   if (!currentWord) return;
+
   let answer = selected || answerInput.value.trim();
-  if (!answer && !testMode) return; // ignore empty answers unless test mode
+  if (!answer) return;
 
   const correct = currentWord.def.trim();
   const retryLater = retryLaterCheckbox.checked;
+  const stats = wordStats[currentWeek][currentWord.term];
 
-  wordStats[currentWeek][currentWord.term].attempts++;
-  if (wordStats[currentWeek][currentWord.term].attempts > 1) {
-    wordStats[currentWeek][currentWord.term].correctFirstTry = false;
+  stats.attempts++;
+  if (!stats.firstAnswerRecorded) {
+    stats.firstAnswerRecorded = true;
+    stats.correctFirstTry = answer.toLowerCase() === correct.toLowerCase();
   }
+
+  attemptedWords++;
 
   if (!testMode) {
     if (answer.toLowerCase() === correct.toLowerCase()) {
       feedback.textContent = "Correct!";
       feedback.style.color = "green";
-      remainingWords = remainingWords.filter(w => w.term !== currentWord.term);
-      setTimeout(showNextWord, 500);
     } else {
+      feedback.textContent = retryLater
+        ? `Wrong! Correct: ${correct} (Will retry later)`
+        : "Wrong! Try again.";
       feedback.style.color = "red";
-      if (retryLater) {
-        if (!incorrectWords.includes(currentWord)) incorrectWords.push(currentWord);
-        remainingWords = remainingWords.filter(w => w.term !== currentWord.term);
-        feedback.textContent = `Wrong! Correct: ${correct} (Will retry later)`;
-        setTimeout(showNextWord, 800);
-      } else {
-        feedback.textContent = "Wrong! Try again.";
+
+      if (retryLater && !incorrectWords.includes(currentWord)) {
+        incorrectWords.push(currentWord);
       }
     }
-  } else {
-    // Test mode: record attempt but do not show feedback
-    remainingWords = remainingWords.filter(w => w.term !== currentWord.term);
-    setTimeout(showNextWord, 300);
   }
+
+  remainingWords = remainingWords.filter(w => w.term !== currentWord.term);
+  setTimeout(showNextWord, 400);
 
   updateProgressBar();
 }
@@ -203,16 +206,15 @@ function shuffleArray(array) {
 // Update progress bar
 function updateProgressBar() {
   const total = vocabByWeek[currentWeek]?.length || 1;
-  const done = total - remainingWords.length;
-  const percent = Math.floor((done / total) * 100);
+  const percent = Math.floor((attemptedWords / total) * 100);
   progressBar.style.width = percent + "%";
 }
 
 // End quiz
 function endQuiz() {
-  const total = Object.keys(wordStats[currentWeek]).length;
-  const correct = Object.values(wordStats[currentWeek]).filter(s => s.correctFirstTry).length;
-  const missed = total - correct;
+  const stats = wordStats[currentWeek];
+  const total = Object.keys(stats).length;
+  const correct = Object.values(stats).filter(s => s.correctFirstTry).length;
 
   if (testMode) {
     alert(`Test finished! Your grade: ${Math.floor((correct / total) * 100)}%`);
@@ -223,6 +225,7 @@ function endQuiz() {
 
   remainingWords = [];
   currentWord = null;
+  attemptedWords = 0;
   updateProgressBar();
 }
 
@@ -234,7 +237,7 @@ answerInput.addEventListener("keydown", e => {
   }
 });
 
-// On page load
+// Page load
 document.addEventListener("DOMContentLoaded", () => {
   updateWeekDropdown();
   updateWeeksList();

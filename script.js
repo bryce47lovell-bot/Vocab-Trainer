@@ -1,130 +1,259 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA50ENd9--9PSQ9BUe4_j4rsN6UNWb5ybE",
-  authDomain: "vocabtrainer-f193a.firebaseapp.com",
-  projectId: "vocabtrainer-f193a",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const DATA_DOC = doc(db, "vocab", "shared");
-
+/**********************
+  GLOBAL STATE
+**********************/
+let vocabData = JSON.parse(localStorage.getItem("vocabData")) || {};
 let quizWords = [];
-let index = 0;
-let correct = 0;
-let retry = [];
-let firstTry = true;
+let currentIndex = 0;
+let firstTryCorrect = 0;
+let totalQuizWords = 0;
+let retryQueue = [];
+let answeredThisQuestion = false;
 
-window.showTab = id => {
-  document.querySelectorAll(".tabContent").forEach(t => t.style.display="none");
-  document.getElementById(id).style.display="block";
-};
+/**********************
+  TAB SYSTEM
+**********************/
+function showTab(tabId) {
+  document.querySelectorAll(".tabContent").forEach(tab => {
+    tab.style.display = "none";
+  });
+  document.getElementById(tabId).style.display = "block";
 
-window.toggleDarkMode = () => document.body.classList.toggle("dark-mode");
+  if (tabId === "quizTab") loadWeeks();
+  if (tabId === "settingsTab") renderManageWeeks();
+}
 
-async function loadWeeks() {
-  const snap = await getDoc(DATA_DOC);
-  const weeks = snap.exists() ? Object.keys(snap.data()) : [];
+/**********************
+  DARK MODE
+**********************/
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
+}
 
-  ["weekSelect","manageWeekSelect"].forEach(id=>{
-    const sel = document.getElementById(id);
-    sel.innerHTML="";
-    weeks.forEach(w=>{
-      const o=document.createElement("option");
-      o.value=w; o.textContent=w;
-      sel.appendChild(o);
-    });
+/**********************
+  SAVE / LOAD
+**********************/
+function saveData() {
+  localStorage.setItem("vocabData", JSON.stringify(vocabData));
+}
+
+/**********************
+  ADD WORDS
+**********************/
+function addBulkWords() {
+  const week = document.getElementById("weekInput").value.trim();
+  const bulk = document.getElementById("bulkInput").value.trim();
+
+  if (!week || !bulk) return alert("Enter a week and words.");
+
+  if (!vocabData[week]) vocabData[week] = [];
+
+  bulk.split("\n").forEach(line => {
+    const parts = line.split("-");
+    if (parts.length >= 2) {
+      vocabData[week].push({
+        term: parts[0].trim(),
+        def: parts.slice(1).join("-").trim()
+      });
+    }
+  });
+
+  saveData();
+  document.getElementById("bulkInput").value = "";
+  loadWeeks();
+  alert("Words added!");
+}
+
+/**********************
+  LOAD WEEKS
+**********************/
+function loadWeeks() {
+  const select = document.getElementById("weekSelect");
+  select.innerHTML = "";
+
+  Object.keys(vocabData).forEach(week => {
+    const opt = document.createElement("option");
+    opt.value = week;
+    opt.textContent = week;
+    select.appendChild(opt);
   });
 }
 
-loadWeeks();
-
-window.addBulkWords = async () => {
-  const week = weekInput.value.trim();
-  const lines = bulkInput.value.trim().split("\n");
-
-  if(!week || !lines.length) return alert("Missing data");
-
-  const words = lines.map(l=>{
-    const [t,d]=l.split(" - ");
-    return {term:t?.trim(), definition:d?.trim()};
-  }).filter(w=>w.term && w.definition);
-
-  const snap = await getDoc(DATA_DOC);
-  const data = snap.exists()? snap.data() : {};
-  data[week]=words;
-
-  await setDoc(DATA_DOC,data);
-  loadWeeks();
-  alert("Saved");
-};
-
-window.deleteWeek = async ()=>{
-  const week = manageWeekSelect.value;
-  if(!week) return;
-
-  const snap = await getDoc(DATA_DOC);
-  const data = snap.data();
-  delete data[week];
-
-  await setDoc(DATA_DOC,data);
-  loadWeeks();
-};
-
-window.startQuiz = async ()=>{
-  const week = weekSelect.value;
-  const snap = await getDoc(DATA_DOC);
-  quizWords = snap.data()[week].slice();
-  index=0; correct=0; retry=[];
-  nextWord();
-};
-
-function nextWord(){
-  if(index>=quizWords.length){
-    if(retry.length){
-      quizWords=retry.slice(); retry=[]; index=0;
-    } else return endQuiz();
+/**********************
+  START QUIZ
+**********************/
+function startQuiz() {
+  const week = document.getElementById("weekSelect").value;
+  if (!vocabData[week] || vocabData[week].length === 0) {
+    return alert("No words in this week.");
   }
 
-  quizTerm.textContent = quizWords[index].term;
-  answerInput.value="";
-  optionsContainer.innerHTML="";
-  firstTry=true;
+  quizWords = [...vocabData[week]];
+  currentIndex = 0;
+  firstTryCorrect = 0;
+  retryQueue = [];
+  totalQuizWords = quizWords.length;
 
-  if(multipleChoice.checked){
-    const defs=[quizWords[index].definition];
-    while(defs.length<4){
-      const r=quizWords[Math.floor(Math.random()*quizWords.length)].definition;
-      if(!defs.includes(r)) defs.push(r);
+  nextQuestion();
+}
+
+/**********************
+  NEXT QUESTION
+**********************/
+function nextQuestion() {
+  answeredThisQuestion = false;
+
+  if (currentIndex >= quizWords.length) {
+    if (retryQueue.length > 0) {
+      quizWords = retryQueue;
+      retryQueue = [];
+      currentIndex = 0;
+    } else {
+      endQuiz();
+      return;
     }
-    defs.sort(()=>Math.random()-0.5);
-    defs.forEach(d=>{
-      const b=document.createElement("button");
-      b.textContent=d;
-      b.onclick=()=>submitAnswer(d);
-      optionsContainer.appendChild(b);
-    });
+  }
+
+  const q = quizWords[currentIndex];
+  document.getElementById("quizTerm").textContent = q.term;
+  document.getElementById("answerInput").value = "";
+  document.getElementById("feedback").textContent = "";
+
+  renderOptions(q);
+  updateProgress();
+}
+
+/**********************
+  MULTIPLE CHOICE
+**********************/
+function renderOptions(q) {
+  const mc = document.getElementById("multipleChoice").checked;
+  const container = document.getElementById("optionsContainer");
+  container.innerHTML = "";
+
+  if (!mc) {
+    container.style.display = "none";
+    return;
+  }
+
+  container.style.display = "block";
+
+  let choices = [q.def];
+  const allDefs = Object.values(vocabData).flat().map(w => w.def);
+
+  while (choices.length < 4 && allDefs.length > choices.length) {
+    const rand = allDefs[Math.floor(Math.random() * allDefs.length)];
+    if (!choices.includes(rand)) choices.push(rand);
+  }
+
+  choices.sort(() => Math.random() - 0.5);
+
+  choices.forEach(choice => {
+    const btn = document.createElement("button");
+    btn.textContent = choice;
+    btn.onclick = () => checkAnswer(choice);
+    container.appendChild(btn);
+  });
+}
+
+/**********************
+  SUBMIT ANSWER
+**********************/
+function submitAnswer() {
+  const val = document.getElementById("answerInput").value.trim();
+  if (!val) return;
+  checkAnswer(val);
+}
+
+/**********************
+  CHECK ANSWER
+**********************/
+function checkAnswer(answer) {
+  if (answeredThisQuestion) return;
+
+  const q = quizWords[currentIndex];
+  const retryLater = document.getElementById("retryLater").checked;
+  const testMode = document.getElementById("testMode").checked;
+
+  answeredThisQuestion = true;
+
+  if (answer.toLowerCase() === q.def.toLowerCase()) {
+    document.getElementById("feedback").textContent = "✅ Correct!";
+    firstTryCorrect++;
+    currentIndex++;
+    setTimeout(nextQuestion, 600);
+  } else {
+    document.getElementById("feedback").textContent = `❌ Correct answer: ${q.def}`;
+
+    if (retryLater || testMode) {
+      retryQueue.push(q);
+      currentIndex++;
+      setTimeout(nextQuestion, 900);
+    } else {
+      answeredThisQuestion = false; // allow retry same question
+    }
   }
 }
 
-window.submitAnswer = (choice=null)=>{
-  const ans = choice ?? answerInput.value.trim();
-  if(!ans) return;
+/**********************
+  PROGRESS
+**********************/
+function updateProgress() {
+  const percent = Math.round((currentIndex / totalQuizWords) * 100);
+  document.getElementById("progressBar").style.width = percent + "%";
+  document.getElementById("progress").textContent =
+    `${currentIndex} / ${totalQuizWords}`;
+}
 
-  if(ans.toLowerCase()===quizWords[index].definition.toLowerCase()){
-    correct++;
-  } else if(retryLater.checked){
-    retry.push(quizWords[index]);
+/**********************
+  END QUIZ
+**********************/
+function endQuiz() {
+  const testMode = document.getElementById("testMode").checked;
+  let message = "🎉 Quiz Complete!";
+
+  if (testMode) {
+    const score = Math.round((firstTryCorrect / totalQuizWords) * 100);
+    message = `🎉 Test Complete! Score: ${score}%`;
   }
 
-  index++;
-  progressBar.style.width = `${(index/quizWords.length)*100}%`;
-  nextWord();
-};
-
-function endQuiz(){
-  feedback.textContent = `Done! Score: ${Math.round((correct/quizWords.length)*100)}%`;
+  document.getElementById("feedback").textContent = message;
+  document.getElementById("quizTerm").textContent = "";
+  document.getElementById("optionsContainer").style.display = "none";
+  document.getElementById("progressBar").style.width = "100%";
 }
+
+/**********************
+  MANAGE WEEKS (SETTINGS)
+**********************/
+function renderManageWeeks() {
+  const list = document.getElementById("manageWeeksList");
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  Object.keys(vocabData).forEach(week => {
+    const li = document.createElement("li");
+    li.textContent = `${week} (${vocabData[week].length} words)`;
+
+    const del = document.createElement("button");
+    del.textContent = "Delete";
+    del.style.marginLeft = "10px";
+    del.onclick = () => {
+      if (confirm(`Delete ${week}?`)) {
+        delete vocabData[week];
+        saveData();
+        loadWeeks();
+        renderManageWeeks();
+      }
+    };
+
+    li.appendChild(del);
+    list.appendChild(li);
+  });
+}
+
+/**********************
+  INIT
+**********************/
+showTab("quizTab");
+loadWeeks();

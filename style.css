@@ -183,3 +183,24 @@ body.dark .sidebar {
 body.dark .sidebar button {
   background: #1e293b;
 }
+
+/* ===== HARD FIX CHECKBOX ALIGNMENT ===== */
+.checkboxContainer {
+  display: block !important;
+  text-align: left;
+}
+
+.checkboxContainer label {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: flex-start !important;
+
+  width: auto !important;
+  gap: 8px;
+
+  margin: 6px 0;
+}
+
+.checkboxContainer input[type="checkbox"] {
+  margin: 0;
+}

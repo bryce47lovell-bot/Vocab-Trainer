@@ -68,27 +68,23 @@ body {
   border: 1px solid #ccc;
 }
 
-/* ===== CHECKBOX CONTAINER ===== */
-/* ===== CHECKBOX CONTAINER ===== */
+/* ===== CHECKBOXES (FIXED) ===== */
 .checkboxContainer {
-  display: flex;
-  gap: 15px;
+  display: block;        /* force vertical stacking */
   margin-top: 10px;
-  background: none;
-  border: none;
-  padding: 0;
 }
 
-#quizTab label {
-  display: flex;
+.checkboxContainer label {
+  display: flex;         /* checkbox + text inline */
   align-items: center;
   gap: 6px;
   margin-bottom: 8px;
   font-size: 16px;
 }
 
-#quizTab input[type="checkbox"] {
-  margin: 0;
+.checkboxContainer input[type="checkbox"] {
+  margin: 0;             /* remove Chrome default offset */
+  padding: 0;
   flex-shrink: 0;
 }
 
@@ -196,9 +192,4 @@ body.dark-mode #optionsContainer button:hover {
 body.dark-mode #feedback,
 body.dark-mode #progress {
   color: #e5e7eb;
-}
-
-/* Checkbox container dark mode */
-body.dark-mode .checkboxContainer {
-  background: #1e293b;
 }

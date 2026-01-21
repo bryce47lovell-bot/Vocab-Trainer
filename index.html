@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Vocabulary Trainer</title>
-  <link rel="stylesheet" href="style.css">
-  <script type="module" src="script.js" defer></script>
+<meta charset="UTF-8">
+<title>Vocabulary Trainer</title>
+<link rel="stylesheet" href="style.css">
+<script type="module" src="script.js" defer></script>
 </head>
 <body>
 
 <div class="container">
+
   <div class="sidebar">
     <button onclick="showTab('quizTab')">Quiz</button>
     <button onclick="showTab('addTab')">Add Words</button>
-    <button onclick="toggleSettings()">Settings</button>
+    <button onclick="showTab('summaryTab')">Summary</button>
     <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    
+    <!-- Settings at the bottom -->
+    <div class="settings-section">
+      <button onclick="showTab('settingsTab')">Settings</button>
+    </div>
   </div>
 
   <div class="mainContent">
 
-    <!-- QUIZ -->
-    <div id="quizTab" class="tabContent" style="display:block;">
+    <!-- QUIZ TAB -->
+    <div id="quizTab" class="tabContent">
       <div class="box">
         <h3>Quiz</h3>
         <select id="weekSelect"></select>
@@ -32,11 +38,13 @@
 
         <p id="quizTerm">Select a week and start quiz</p>
         <div id="optionsContainer" style="display:none;"></div>
+
         <input id="answerInput" type="text" placeholder="Type definition">
         <button id="submitBtn" onclick="submitAnswer()">Submit Answer</button>
 
         <div id="feedback"></div>
         <div id="progress"></div>
+
         <div id="progressContainer">
           <div id="progressBar"></div>
         </div>
@@ -45,36 +53,55 @@
       </div>
     </div>
 
-    <!-- ADD WORDS -->
+    <!-- ADD WORDS TAB -->
     <div id="addTab" class="tabContent" style="display:none;">
       <div class="box">
-        <h3>Add Vocabulary (Bulk)</h3>
+        <h3>Add / Edit Vocabulary (Bulk)</h3>
         <input id="weekInput" type="text" placeholder="Week name (ex: Week 3)">
         <textarea id="bulkInput" placeholder="Term - Definition&#10;Term - Definition"></textarea>
-        <button onclick="addBulkWords()">Add Words</button>
+        <button onclick="addBulkWords()">Add / Update Words</button>
       </div>
     </div>
 
-    <!-- SETTINGS -->
-    <div id="settingsTab" class="tabContent settingsTab" style="display:none;">
+    <!-- SUMMARY TAB -->
+    <div id="summaryTab" class="tabContent" style="display:none;">
+      <div class="box">
+        <h3>Quiz Summary</h3>
+        <p>Total words: <span id="totalWords">0</span></p>
+        <p>Correct on first try: <span id="correctFirstTry">0</span></p>
+        <p>Missed words: <span id="missedWords">0</span></p>
+        <ul id="missedWordsList"></ul>
+      </div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div id="settingsTab" class="tabContent" style="display:none;">
       <div class="box">
         <h3>Settings</h3>
 
-        <h4>Account</h4>
-        <input id="signupEmail" type="text" placeholder="Email">
-        <input id="signupPassword" type="password" placeholder="Password">
-        <button onclick="signupUser()">Signup</button>
-        <p id="signupMessage"></p>
+        <!-- Login / Signup -->
+        <div id="authSection">
+          <h4>Login</h4>
+          <input id="loginEmail" type="text" placeholder="Email">
+          <input id="loginPassword" type="password" placeholder="Password">
+          <button onclick="loginUser()">Login</button>
+          <p id="loginMessage"></p>
 
-        <input id="loginEmail" type="text" placeholder="Email">
-        <input id="loginPassword" type="password" placeholder="Password">
-        <button onclick="loginUser()">Login</button>
-        <p id="loginMessage"></p>
+          <h4>Signup</h4>
+          <input id="signupEmail" type="text" placeholder="Email">
+          <input id="signupPassword" type="password" placeholder="Password">
+          <button onclick="signupUser()">Signup</button>
+          <p id="signupMessage"></p>
 
-        <button onclick="logoutUser()">Logout</button>
+          <button onclick="logoutUser()">Logout</button>
+        </div>
 
-        <h4>Manage Weeks</h4>
-        <ul id="weekList"></ul>
+        <!-- Manage Weeks -->
+        <div id="manageWeeksSection">
+          <h4>Manage Weeks</h4>
+          <select id="manageWeekSelect"></select>
+          <button onclick="deleteWeek()">Delete Week</button>
+        </div>
       </div>
     </div>
 

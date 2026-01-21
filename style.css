@@ -1,195 +1,182 @@
 /* ===== RESET ===== */
 * {
   box-sizing: border-box;
-}
-
-body {
   margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  color: #111827;
 }
 
 /* ===== LAYOUT ===== */
+body {
+  background: #f3f4f6;
+  color: #111;
+}
+
 .container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 /* ===== SIDEBAR ===== */
 .sidebar {
-  width: 150px;
-  background: #2563eb;
+  width: 220px;
+  background: #1e40af;
+  padding: 15px;
   display: flex;
   flex-direction: column;
-  padding: 20px 10px;
 }
 
 .sidebar button {
   margin: 6px 0;
-  padding: 8px;
+  padding: 10px;
   font-size: 14px;
   color: white;
-  background: #1e40af;
+  background: #2563eb;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .sidebar button:hover {
-  background: #17307a;
+  background: #1d4ed8;
 }
 
 /* ===== MAIN CONTENT ===== */
 .mainContent {
   flex: 1;
   padding: 20px;
-  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== TAB CONTENT ===== */
+.tabContent {
+  width: 100%;
+  max-width: 600px;
 }
 
 /* ===== BOX ===== */
 .box {
   background: white;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* ===== HEADINGS ===== */
+h3 {
+  margin-bottom: 15px;
 }
 
 /* ===== INPUTS ===== */
-.mainContent input,
-.mainContent textarea,
-.mainContent select {
+input[type="text"],
+textarea,
+select {
   width: 100%;
-  padding: 10px;
-  margin-top: 8px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  margin: 8px 0;
+  padding: 8px;
+  font-size: 14px;
 }
 
-/* ===== CHECKBOXES (FIXED) ===== */
-.checkboxContainer {
-  display: block;        /* force vertical stacking */
-  margin-top: 10px;
-}
-
-.checkboxContainer label {
-  display: flex;         /* checkbox + text inline */
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 8px;
-  font-size: 16px;
-}
-
-.checkboxContainer input[type="checkbox"] {
-  margin: 0;             /* remove Chrome default offset */
-  padding: 0;
-  flex-shrink: 0;
+textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 /* ===== BUTTONS ===== */
-.mainContent button {
-  padding: 10px 16px;
+button {
   margin-top: 10px;
-  font-size: 16px;
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
   cursor: pointer;
 }
 
-.mainContent button:hover {
-  background: #1e40af;
+/* ===== CHECKBOXES ===== */
+.checkboxContainer {
+  display: flex;
+  flex-direction: column;   /* stack vertically */
+  align-items: flex-start; /* keep left aligned */
+  gap: 6px;
+  margin: 10px 0;
 }
 
-/* ===== MULTIPLE CHOICE ===== */
+.checkboxContainer label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+/* ===== QUIZ WORD / TERM ===== */
+#quizTerm {
+  margin: 15px 0;
+  font-size: 16px;
+  font-weight: bold;
+  word-wrap: break-word;
+}
+
+/* ===== MULTIPLE CHOICE OPTIONS ===== */
 #optionsContainer {
-  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px 0;
+  width: 100%;
 }
 
 #optionsContainer button {
   width: 100%;
-  margin-top: 6px;
+  text-align: left;
 }
 
 /* ===== FEEDBACK ===== */
 #feedback {
   margin-top: 10px;
   font-weight: bold;
-  text-align: center;
 }
 
 #progress {
   margin-top: 5px;
-  font-weight: bold;
+  font-size: 13px;
 }
 
-/* ========================= */
+/* ===== LISTS ===== */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  margin: 5px 0;
+}
+
 /* ===== DARK MODE ===== */
-/* ========================= */
-
-body.dark-mode {
-  background: #0f172a;
+body.dark {
+  background: #111827;
   color: #e5e7eb;
 }
 
-/* Sidebar */
-body.dark-mode .sidebar {
+body.dark .box {
+  background: #1f2933;
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select {
+  background: #111827;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+}
+
+body.dark button {
+  background: #374151;
+  color: white;
+}
+
+body.dark .sidebar {
   background: #020617;
 }
 
-body.dark-mode .sidebar button {
+body.dark .sidebar button {
   background: #1e293b;
-  color: #e5e7eb;
-}
-
-body.dark-mode .sidebar button:hover {
-  background: #334155;
-}
-
-/* Main content */
-body.dark-mode .mainContent {
-  background: #0f172a;
-}
-
-/* Boxes */
-body.dark-mode .box {
-  background: #020617;
-  box-shadow: 0 0 0 1px #1e293b;
-}
-
-/* Inputs */
-body.dark-mode input,
-body.dark-mode textarea,
-body.dark-mode select {
-  background: #020617;
-  color: #e5e7eb;
-  border: 1px solid #334155;
-}
-
-/* Buttons */
-body.dark-mode .mainContent button {
-  background: #2563eb;
-}
-
-body.dark-mode .mainContent button:hover {
-  background: #1d4ed8;
-}
-
-/* Multiple choice buttons */
-body.dark-mode #optionsContainer button {
-  background: #1e293b;
-  color: #e5e7eb;
-}
-
-body.dark-mode #optionsContainer button:hover {
-  background: #334155;
-}
-
-/* Feedback */
-body.dark-mode #feedback,
-body.dark-mode #progress {
-  color: #e5e7eb;
 }

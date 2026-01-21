@@ -46,15 +46,13 @@ body {
 .mainContent {
   flex: 1;
   padding: 20px;
-
-  /* IMPORTANT FIX */
   display: block;
 }
 
 /* ===== TAB CONTENT ===== */
 .tabContent {
   max-width: 600px;
-  margin: 0 auto;          /* center the whole quiz box */
+  margin: 0 auto;
 }
 
 /* ===== CONTENT BOX ===== */
@@ -63,8 +61,6 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-
-  /* LOCK CONTENT */
   text-align: left;
 }
 
@@ -95,25 +91,23 @@ button {
   cursor: pointer;
 }
 
-/* ===== CHECKBOX CONTAINER (FIXED) ===== */
+/* ===== CHECKBOX CONTAINER ===== */
 .checkboxContainer {
   margin: 10px 0;
-
-  display: block;          /* NOT flex */
+  display: block;
 }
 
 .checkboxContainer label {
-  display: block;          /* FORCE vertical */
+  display: block;
   margin-bottom: 6px;
   font-size: 14px;
 }
 
-/* ===== QUIZ TERM (FIXED RIGHT DRIFT) ===== */
+/* ===== QUIZ TERM ===== */
 #quizTerm {
   margin: 15px 0;
   font-size: 16px;
   font-weight: bold;
-
   max-width: 100%;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -154,34 +148,42 @@ li {
 }
 
 /* ===== DARK MODE ===== */
-body.dark {
+body.dark-mode {
   background: #111827;
   color: #e5e7eb;
 }
 
-body.dark .box {
+body.dark-mode .box {
   background: #1f2933;
 }
 
-body.dark input,
-body.dark textarea,
-body.dark select {
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
   background: #111827;
   color: #e5e7eb;
   border: 1px solid #374151;
 }
 
-body.dark button {
+body.dark-mode button {
   background: #374151;
   color: white;
 }
 
-body.dark .sidebar {
+body.dark-mode button:hover {
+  background: #4b5563;
+}
+
+body.dark-mode .sidebar {
   background: #020617;
 }
 
-body.dark .sidebar button {
+body.dark-mode .sidebar button {
   background: #1e293b;
+}
+
+body.dark-mode .sidebar button:hover {
+  background: #3b4252;
 }
 
 /* ===== HARD FIX CHECKBOX ALIGNMENT ===== */
@@ -194,10 +196,8 @@ body.dark .sidebar button {
   display: inline-flex !important;
   align-items: center;
   justify-content: flex-start !important;
-
   width: auto !important;
   gap: 8px;
-
   margin: 6px 0;
 }
 

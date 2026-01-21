@@ -51,12 +51,15 @@ body {
 
 /* ===== TAB CONTENT ===== */
 .tabContent {
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: none;      /* remove width limit */
+  margin: 0;            /* no centering */
+  padding: 0 20px;      /* optional horizontal padding */
 }
 
 /* ===== CONTENT BOX ===== */
 .box {
+  width: 100%;          /* stretch full width */
+  max-width: 100%;      /* ensure it doesn’t shrink */
   background: white;
   padding: 20px;
   border-radius: 8px;

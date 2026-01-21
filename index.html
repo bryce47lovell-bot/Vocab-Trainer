@@ -23,7 +23,6 @@
         <h3>Quiz</h3>
         <select id="weekSelect"></select>
 
-        <!-- Checkbox container -->
         <div class="checkboxContainer">
           <label>
             <input type="checkbox" id="multipleChoice"> Multiple Choice
@@ -42,13 +41,17 @@
 
         <div id="feedback"></div>
         <div id="progress"></div>
+        <div id="progressBarContainer" style="background:#ddd; height:10px; border-radius:5px; margin-top:5px;">
+          <div id="progressBar" style="width:0%; height:100%; background:#2563eb; border-radius:5px; transition: width 0.3s ease;"></div>
+        </div>
+
         <button onclick="startQuiz()">Start Quiz</button>
       </div>
     </div>
 
     <div id="addTab" class="tabContent" style="display:none;">
       <div class="box">
-        <h3>Add Vocabulary (Bulk)</h3>
+        <h3>Add Vocabulary</h3>
         <input id="weekInput" type="text" placeholder="Week name (ex: Week 3)">
         <textarea id="bulkInput" placeholder="Term - Definition&#10;Term - Definition"></textarea>
         <button onclick="addBulkWords()">Add Words</button>
